@@ -171,7 +171,7 @@ struct ExpProgressStyle: ProgressViewStyle {
             ZStack(alignment: .leading) {
                 // 배경
                 Capsule()
-                    .fill(.white)
+                    .fill(.gray)
                     .frame(height: geometry.size.height)
                 
                 // 진행 부분
