@@ -8,14 +8,18 @@
 import SwiftUI
 
 struct ContentView: View {
+    
+    // 회원 관련 뷰모델
+    // 임시
+    var isLogin = true
+    
+    
     var body: some View {
-        VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundStyle(.tint)
-            Text("Hello, world!")
+        if (isLogin) {
+            HomeView()
+        }else{
+            LoginView()
         }
-        .padding()
     }
 }
 
