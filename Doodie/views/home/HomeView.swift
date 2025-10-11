@@ -75,7 +75,7 @@ struct HomeView: View {
                     
 
                     // 활동 상태창
-                    NavigationLink(destination: ChatBotView()){
+                    NavigationLink(destination: ActivityView()){
                         ZStack{
                             // 베경
                             RoundedRectangle(cornerRadius: 24)
