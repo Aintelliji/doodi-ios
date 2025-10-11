@@ -17,7 +17,6 @@ struct HomeView: View {
     var isProgress: Bool = false
     
     @State private var selectedTab = 0
-    @GestureState private var dragOffset: CGFloat = 0
      
      let tabTitles = ["기록", "업적", "달력"]
     
