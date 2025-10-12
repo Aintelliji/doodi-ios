@@ -11,7 +11,7 @@ struct ContentView: View {
     
     // 회원 관련 뷰모델
     // 임시
-    var isLogin = true
+    var isLogin = false
     
     
     var body: some View {
