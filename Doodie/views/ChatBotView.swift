@@ -37,7 +37,17 @@ struct ChatBotView: View {
                                 // msg의 isActivity가 false면 일반 말풍선
                                 // true면 활동 말풍선
                                 if(msg.isActivity){
-                                    NavigationLink(destination: Text("타이머 화면")){
+                                    var tmp : [String]{
+                                        msg.text.split(separator: ",").map{String($0)}
+                                    }
+                                    var title : String {
+                                        tmp[0]
+                                    }
+                                    var des : String {
+                                        tmp[1]
+                                    }
+                                    
+                                    NavigationLink(destination: TimerView(isProgress: false, activityIconUrl: "🎀", activityName: title, activityDescription: des)){
                                         ActivityBurbble(message: msg)
                                             .transition(.move(edge: msg.isMine ? .trailing : .leading).combined(with: .opacity))
                                             .id(msg.id)
@@ -111,6 +121,7 @@ struct ChatBotView: View {
                 LinearGradient(colors: [.lightYellow, .lightPink, .lightPurple], startPoint: .topLeading, endPoint: .bottomTrailing)
             )
         }
+        .navigationBarBackButtonHidden(true) // 기존 네비게이션 바 숨김
         .ignoresSafeArea(.keyboard)
         
     }

@@ -50,6 +50,7 @@ struct TimerView: View {
             
             Spacer()
         }
+        .navigationBarBackButtonHidden(true) // 기존 네비게이션 바 숨김
         .background(
             LinearGradient(colors: [.lightYellow, .lightPink, .lightPurple], startPoint: .topLeading, endPoint: .bottomTrailing)
         )
