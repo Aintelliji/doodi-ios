@@ -61,18 +61,36 @@ struct ActivityView: View {
                     // 첫번째 열
                     GridRow{
                         Spacer()
-                        ActivityCardView(activityIcon: "💪", activityName: "운동하기", cardBackgroundColor: Color.lightPink)
+                        NavigationLink(destination: TimerView(isProgress: false, activityIconUrl: "💪", activityName: "운동하기", activityDescription: "몸을 움직여 건강해져요")){
+                            ActivityCardView(activityIcon: "💪", activityName: "운동하기", cardBackgroundColor: Color.lightPink)
+                                .foregroundStyle(.black)
+                                .frame(width: 150, height: 150)
+                        }
+                        
                         Spacer()
-                        ActivityCardView(activityIcon: "📚", activityName: "책 읽기", cardBackgroundColor: Color.lightPurple)
+                        
+                        NavigationLink(destination: TimerView(isProgress: false, activityIconUrl: "📚", activityName: "책 읽기", activityDescription: "마음의 양식을 채워요")){
+                            ActivityCardView(activityIcon: "📚", activityName: "책 읽기", cardBackgroundColor: Color.lightPurple)
+                                .foregroundStyle(.black)
+                                .frame(width: 150, height: 150)
+                        }
                         Spacer()
                     }.frame(width: .infinity, height: 150)
                     
                     // 두번째 열
                     GridRow{
                         Spacer()
-                        ActivityCardView(activityIcon: "🎹", activityName: "악기 연주", cardBackgroundColor: Color.lightYellow)
+                        NavigationLink(destination: TimerView(isProgress: false, activityIconUrl: "🎹", activityName: "악기 연주", activityDescription: "룰루랄랄라")){
+                            ActivityCardView(activityIcon: "🎹", activityName: "악기 연주", cardBackgroundColor: Color.lightYellow)
+                                .foregroundStyle(.black)
+                                .frame(width: 150, height: 150)
+                        }
                         Spacer()
-                        ActivityCardView(activityIcon: "💪", activityName: "뭐가 좋을까", cardBackgroundColor: Color.green)
+                        NavigationLink(destination: TimerView(isProgress: false, activityIconUrl: "💪", activityName: "뭐가좋을까", activityDescription: "룰루랄랄라")){
+                            ActivityCardView(activityIcon: "💪", activityName: "뭐가좋을까", cardBackgroundColor: Color.skyBlue)
+                                .foregroundStyle(.black)
+                                .frame(width: 150, height: 150)
+                        }
                         Spacer()
                     }.frame(width: .infinity, height: 150)
                 }.padding(.vertical, 20)
