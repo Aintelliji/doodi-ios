@@ -42,7 +42,7 @@ struct TimerView: View {
             // 진행중이면 진행 창 및 활동 중지 버튼
             // 진행중이 아니면 타이머 설정 버튼
             if(isProgress){
-              
+                TimerProgressView(totalTime: 100, timeRemaining: 100).padding(20)
                 
             }else{
                 TimerSettingView().padding(20)
@@ -57,5 +57,5 @@ struct TimerView: View {
 }
 
 #Preview {
-    TimerView(isProgress: false)
+    TimerView(isProgress: true)
 }

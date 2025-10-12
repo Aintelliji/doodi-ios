@@ -15,7 +15,7 @@ struct RoundRectangle_20_Shadow: View {
         RoundedRectangle(cornerRadius: 20)
             .fill(color)
             .frame(width: width, height: height)
-            .shadow(radius: 10)
+            .shadow(color: .gray, radius: 4, x: 0, y: 4)
     }
 }
 
