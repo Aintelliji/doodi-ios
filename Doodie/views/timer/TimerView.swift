@@ -1,0 +1,58 @@
+//
+//  TimerView.swift
+//  Doodie
+//
+//  Created by 수진 on 10/12/25.
+//
+
+import SwiftUI
+
+struct TimerView: View {
+    @Environment(\.dismiss) var dismiss
+    var isProgress : Bool
+    
+    var activityIconUrl: String = "💪"
+    var activityName : String = "운동"
+    var activityDescription: String = "몸을 움직여 건강해져요"
+    
+    
+    var body: some View {
+        VStack{
+            // 툴바
+            Toolbar(title: "타이머 ⏰", description: "집중해서 활동해보세요", onBack:{dismiss()})
+            
+            // 선택한 활동 설명
+            VStack{
+                // Image("") 아이콘...
+                Text(activityIconUrl)
+                    .font(.title)
+                Text(activityName)
+                    .font(.title2)
+                Text(activityDescription)
+                    .foregroundStyle(.gray)
+            }
+            .padding(.horizontal, 100)// geometry같은걸로 전체 너비 구해서 빼기?;;
+            .padding(.vertical, 32)
+            .background(RoundRectangle_20_Shadow(width: .infinity, height: 150, color: Color.lightYellow))
+            
+            // RoundRectangle_20_Shadow(width: .infinity, height: 150, color: Color.cyan)
+            
+            // 타이머부분
+            // 진행중이면 진행 창 및 활동 중지 버튼
+            // 진행중이 아니면 타이머 설정 버튼
+            if(isProgress){
+              TimerSettingView()
+                
+            }else{
+                
+                
+            }
+        }.background(
+            LinearGradient(colors: [.lightYellow, .lightPink, .lightPurple], startPoint: .topLeading, endPoint: .bottomTrailing)
+        )
+    }
+}
+
+#Preview {
+    TimerView(isProgress: false)
+}
