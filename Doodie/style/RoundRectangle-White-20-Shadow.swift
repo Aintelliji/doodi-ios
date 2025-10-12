@@ -7,12 +7,18 @@
 
 import SwiftUI
 
-struct RoundRectangle_White_20_Shadow: View {
+struct RoundRectangle_20_Shadow: View {
+    var width: CGFloat
+    var height: CGFloat
+    var color: Color
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        RoundedRectangle(cornerRadius: 20)
+            .fill(color)
+            .frame(width: width, height: height)
+            .shadow(radius: 10)
     }
 }
 
 #Preview {
-    RoundRectangle_White_20_Shadow()
+    RoundRectangle_20_Shadow(width:120, height: 120, color: Color.white)
 }

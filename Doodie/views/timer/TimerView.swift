@@ -28,6 +28,7 @@ struct TimerView: View {
                     .font(.title)
                 Text(activityName)
                     .font(.title2)
+                    .fontWeight(.bold)
                 Text(activityDescription)
                     .foregroundStyle(.gray)
             }
@@ -41,13 +42,15 @@ struct TimerView: View {
             // 진행중이면 진행 창 및 활동 중지 버튼
             // 진행중이 아니면 타이머 설정 버튼
             if(isProgress){
-              TimerSettingView()
+              
                 
             }else{
-                
-                
+                TimerSettingView().padding(20)
             }
-        }.background(
+            
+            Spacer()
+        }
+        .background(
             LinearGradient(colors: [.lightYellow, .lightPink, .lightPurple], startPoint: .topLeading, endPoint: .bottomTrailing)
         )
     }
