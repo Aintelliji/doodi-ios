@@ -153,7 +153,7 @@ struct HomeView: View {
                 LinearGradient(colors: [.lightYellow, .lightPink, .lightPurple], startPoint: .topLeading, endPoint: .bottomTrailing)
             )
         } // navigation stack
-            
+        .navigationBarBackButtonHidden(true) // 기존 네비게이션 바 숨김
             
     }
 }

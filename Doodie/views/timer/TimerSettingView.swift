@@ -9,6 +9,7 @@ import SwiftUI
 
 struct TimerSettingView: View {
     @State private var selectedTime: Double = 30
+    @Binding var isProgress : Bool
     
     var body: some View {
         VStack{
@@ -52,8 +53,22 @@ struct TimerSettingView: View {
             
             
             // 버튼
+//            NavigationLink(destination: TimerProgressView(totalTime: selectedTime)){
+//                HStack {
+//                    Text("🚀 시작하기")
+//                        .fontWeight(.semibold)
+//                        .foregroundColor(.black)
+//                }
+//                .frame(maxWidth: .infinity)
+//                .padding()
+//                .background(Color.yellow)
+//                .cornerRadius(20)
+//                .shadow(color: Color.black.opacity(0.1), radius: 4, x: 0, y: 4)
+//                .padding(.top, 24)
+//            }
             Button(action: {
                 print("시작하기: \(selectedTime)분 타이머 시작")
+                isProgress = true
             }) {
                 HStack {
                     Text("🚀 시작하기")
@@ -74,5 +89,6 @@ struct TimerSettingView: View {
 
 
 #Preview {
-    TimerSettingView()
+    @State var val = true
+    TimerSettingView(isProgress: $val)
 }

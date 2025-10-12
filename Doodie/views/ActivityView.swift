@@ -160,7 +160,7 @@ struct WaveBackgroundView: View {
         WaveShape(phase: phase)
             .fill(
                 LinearGradient(
-                    gradient: Gradient(colors: [.blue, .cyan]),
+                    gradient: Gradient(colors: [.skyBlue, .cyan]),
                     startPoint: .topLeading,
                     endPoint: .bottomTrailing
                 )

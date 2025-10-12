@@ -9,7 +9,7 @@ import SwiftUI
 
 struct TimerView: View {
     @Environment(\.dismiss) var dismiss
-    var isProgress : Bool
+    @State var isProgress : Bool
     
     var activityIconUrl: String = "💪"
     var activityName : String = "운동"
@@ -42,10 +42,10 @@ struct TimerView: View {
             // 진행중이면 진행 창 및 활동 중지 버튼
             // 진행중이 아니면 타이머 설정 버튼
             if(isProgress){
-                TimerProgressView(totalTime: 100, timeRemaining: 100).padding(20)
+                TimerProgressView(totalTime: 100).padding(20)
                 
             }else{
-                TimerSettingView().padding(20)
+                TimerSettingView(isProgress: $isProgress).padding(20)
             }
             
             Spacer()

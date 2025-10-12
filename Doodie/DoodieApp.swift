@@ -9,9 +9,17 @@ import SwiftUI
 
 @main
 struct DoodieApp: App {
+    
+    @StateObject var nav = NavigationState()
+    // TODO:: 네비게이션 뜯어고쳐야함.. 방식...
+    // swiftdata 써야함... (isProgress 담을 용도)
+    
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            NavigationStack(path: $nav.path) {
+                ContentView()
+            }
+            .environmentObject(nav) 
         }
     }
 }
