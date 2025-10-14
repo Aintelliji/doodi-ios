@@ -8,17 +8,13 @@
 import SwiftUI
 
 struct HomeView: View {
-    var level: Int = 1
-    var remainExp: Int = 50
-    var exp: Float = 900
-    var minExp: Float = 900
-    var maxExp: Float = 1000
     
-    var isProgress: Bool = false
+    
+    @StateObject var homeViewModel = HomeViewModel()
     
     @State private var selectedTab = 0
-     
-     let tabTitles = ["기록", "업적", "달력"]
+    
+    let tabTitles = ["기록", "업적", "달력"]
     
     var body: some View {
         // 전체를 Navigation Stack으로 감싼다.
@@ -27,7 +23,6 @@ struct HomeView: View {
             ScrollView{
                 
                 VStack{
-                    
                     // 성장하는 캐릭터
                     Image("character-sample")
                         .resizable()
@@ -43,25 +38,25 @@ struct HomeView: View {
                         VStack{
                             Spacer()
                             // 레벨
-                            Text("레벨 \(level)")
+                            Text("레벨 \(homeViewModel.characterInfo!.level)")
                                 .font(.title)
                                 .fontWeight(.bold)
                             
                             // 남은 경험치
-                            Text("다음 레벨까지 \(remainExp) exp")
+                            Text("다음 레벨까지 \((homeViewModel.characterInfo!.maxExpOfCurrentLevel) - homeViewModel.characterInfo!.currentExp) exp")
                                 .foregroundStyle(.gray)
                                 .padding(.bottom, 12)
                             
                             
                             // 경험치 바
                             VStack{
-                                ProgressView(value: exp, total: maxExp)
+                                ProgressView(value: Float(homeViewModel.characterInfo!.currentExp), total: Float(homeViewModel.characterInfo!.maxExpOfCurrentLevel))
                                     .progressViewStyle(ExpProgressStyle())
                                     .frame(height: 12)
                                 HStack{
-                                    Text("\(Int(minExp)) EXP")
+                                    Text("\(homeViewModel.characterInfo!.minExpOfCurrentLevel) EXP")
                                     Spacer()
-                                    Text("\(Int(maxExp)) EXP")
+                                    Text("\(homeViewModel.characterInfo!.maxExpOfCurrentLevel) EXP")
                                 }
                             }
                             .padding(.horizontal, 40)
@@ -72,19 +67,19 @@ struct HomeView: View {
                     .padding(.bottom, 20)
                     
                     
-
+                    
+                    
+                    
+                    
                     // 활동 상태창
-                    NavigationLink(destination: ActivityView()){
-                        ZStack{
-                            // 베경
-                            RoundedRectangle(cornerRadius: 24)
-                                .fill(.white)
-                                .shadow(radius: 10)
-                            
-                            // 활동 선택창 or 활동 상태창
-                            if(isProgress){
-                                
-                            }else{
+                    switch homeViewModel.activityStatusViewState{
+                    case .NewActivity:
+                        NavigationLink(destination: ActivityView()){
+                            ZStack{
+                                // 베경
+                                RoundedRectangle(cornerRadius: 24)
+                                    .fill(.white)
+                                    .shadow(radius: 10)
                                 HStack{
                                     Spacer()
                                     Image("Logo-ani")
@@ -101,12 +96,16 @@ struct HomeView: View {
                                     Spacer()
                                 }
                             }
+                            .frame(height: 100)
                             
                         }
-                        .frame(height: 100)
+                        .padding(.bottom, 20)
                         
-                    } // 활동상태창
-                    .padding(.bottom, 20)
+                        
+                    case.ProgressingActivity:
+                        VStack{}
+                    }
+                    
                     
                     
                     // 기록-업적-달력 창
@@ -128,13 +127,13 @@ struct HomeView: View {
                                             RoundedRectangle(cornerRadius: 20)
                                                 .fill(selectedTab == index ? Color.white : Color(.systemGray6))
                                                 .shadow(color: selectedTab == index ? Color.black.opacity(0.1) : .clear,
-                                                                radius: 3, x: 0, y: 2)
+                                                        radius: 3, x: 0, y: 2)
                                         )
                                 }
                             }
                         }
                         .padding(.horizontal)
-                                
+                        
                         // 하위 콘텐츠
                         TabView(selection: $selectedTab) {
                             RecordView()
@@ -147,14 +146,14 @@ struct HomeView: View {
                     }
                 } // vstack
                 .padding(20)
-                    
+                
             } // scroll view
             .background(
                 LinearGradient(colors: [.lightYellow, .lightPink, .lightPurple], startPoint: .topLeading, endPoint: .bottomTrailing)
             )
         } // navigation stack
         .navigationBarBackButtonHidden(true) // 기존 네비게이션 바 숨김
-            
+        
     }
 }
 
@@ -170,7 +169,7 @@ struct ExpProgressStyle: ProgressViewStyle {
             ZStack(alignment: .leading) {
                 // 배경
                 Capsule()
-                    .fill(.gray)
+                    .fill(.lightGray)
                     .frame(height: geometry.size.height)
                 
                 // 진행 부분
