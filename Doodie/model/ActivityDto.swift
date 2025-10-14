@@ -6,10 +6,8 @@
 //
 
 struct ActivityDto{
-    var activityIcon: String //Img url
+    var activityIconUrl: String //Img url
     var activityName: String
     var activityDescription: String
-    
     // 시간도 같이 관리..?
-    
 }

@@ -10,7 +10,7 @@ import SwiftUI
 struct ResultView: View {
     @EnvironmentObject var nav: NavigationState
     
-    var activityDto = ActivityDto(activityIcon: "💪", activityName: "운동", activityDescription: "건강해져봅시다. 다이어트 좀 합시다.")
+    var activityDto = ActivityDto(activityIconUrl: "💪", activityName: "운동", activityDescription: "건강해져봅시다. 다이어트 좀 합시다.")
     
     var activityTime: Int = 30
     // 획득한 경험치 - 서버에서 받아옴..!
@@ -27,7 +27,7 @@ struct ResultView: View {
                 // 선택한 활동
                 VStack{
                     // Image("") 아이콘...
-                    Text(activityDto.activityIcon)
+                    Text(activityDto.activityIconUrl)
                         .font(.title)
                     Text(activityDto.activityName)
                         .font(.title2)
@@ -164,7 +164,7 @@ struct ResultView: View {
 }
 
 #Preview {
-    var activityDto = ActivityDto(activityIcon: "💪", activityName: "운동", activityDescription: "건강해져봅시다. 다이어트 좀 합시다.")
+    var activityDto = ActivityDto(activityIconUrl: "💪", activityName: "운동", activityDescription: "건강해져봅시다. 다이어트 좀 합시다.")
     ResultView(activityDto: activityDto, exp: 50, maxExp: 50, remainingExp: 50)
         .environmentObject(NavigationState())
 }

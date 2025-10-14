@@ -11,9 +11,9 @@ struct ActivityView: View {
     
     // 현재 화면을 닫을 수 있는 환경 변수
     @Environment(\.dismiss) var dismiss
+    @StateObject var activityViewModel = ActivityViewModel()
     
-    var recommendMsg: String = "지난 주에는 운동을 적게 했으니 오늘은 운동 어떠세요?"
-    
+
     var body: some View {
         
         NavigationStack{
@@ -24,7 +24,7 @@ struct ActivityView: View {
                 
                 Spacer()
                 // 추천 메세지
-                Text("💡"+recommendMsg)
+                Text("💡 \(activityViewModel.getRecommendMsg())")
                     .padding(20)
                     .background(
                         RoundedRectangle(cornerRadius: 20)
@@ -33,7 +33,7 @@ struct ActivityView: View {
                     )
                 
                 // 챗봇 이동
-                NavigationLink(destination: ChatBotView()){
+                NavigationLink(destination: HomeView()){
                     ZStack{
                         RoundedRectangle(cornerRadius: 20)
                             .fill(.white)
@@ -61,16 +61,20 @@ struct ActivityView: View {
                     // 첫번째 열
                     GridRow{
                         Spacer()
-                        NavigationLink(destination: TimerView(isProgress: false, activityIconUrl: "💪", activityName: "운동하기", activityDescription: "몸을 움직여 건강해져요")){
-                            ActivityCardView(activityIcon: "💪", activityName: "운동하기", cardBackgroundColor: Color.lightPink)
+                        NavigationLink(destination: TimerView(activityDto: activityViewModel.activityList[0])){
+                            
+                            let activity = activityViewModel.activityList[0]
+                            ActivityCardView(activityIcon: activity.activityIconUrl, activityName: activity.activityName, cardBackgroundColor: Color.lightPink)
                                 .foregroundStyle(.black)
                                 .frame(width: 150, height: 150)
                         }
                         
                         Spacer()
                         
-                        NavigationLink(destination: TimerView(isProgress: false, activityIconUrl: "📚", activityName: "책 읽기", activityDescription: "마음의 양식을 채워요")){
-                            ActivityCardView(activityIcon: "📚", activityName: "책 읽기", cardBackgroundColor: Color.lightPurple)
+                        NavigationLink(destination: TimerView(activityDto: activityViewModel.activityList[1])){
+                            
+                            let activity = activityViewModel.activityList[1]
+                            ActivityCardView(activityIcon: activity.activityIconUrl, activityName: activity.activityName, cardBackgroundColor: Color.lightPurple)
                                 .foregroundStyle(.black)
                                 .frame(width: 150, height: 150)
                         }
@@ -80,14 +84,17 @@ struct ActivityView: View {
                     // 두번째 열
                     GridRow{
                         Spacer()
-                        NavigationLink(destination: TimerView(isProgress: false, activityIconUrl: "🎹", activityName: "악기 연주", activityDescription: "룰루랄랄라")){
-                            ActivityCardView(activityIcon: "🎹", activityName: "악기 연주", cardBackgroundColor: Color.lightYellow)
+                        NavigationLink(destination: TimerView(activityDto: activityViewModel.activityList[2])){
+                            let activity = activityViewModel.activityList[2]
+                            ActivityCardView(activityIcon: activity.activityIconUrl, activityName: activity.activityName, cardBackgroundColor: Color.lightYellow)
                                 .foregroundStyle(.black)
                                 .frame(width: 150, height: 150)
                         }
                         Spacer()
-                        NavigationLink(destination: TimerView(isProgress: false, activityIconUrl: "💪", activityName: "뭐가좋을까", activityDescription: "룰루랄랄라")){
-                            ActivityCardView(activityIcon: "💪", activityName: "뭐가좋을까", cardBackgroundColor: Color.skyBlue)
+                        NavigationLink(destination: TimerView(activityDto: activityViewModel.activityList[3])){
+                            let activity = activityViewModel.activityList[3]
+                            
+                            ActivityCardView(activityIcon: activity.activityIconUrl, activityName: activity.activityName, cardBackgroundColor: Color.skyBlue)
                                 .foregroundStyle(.black)
                                 .frame(width: 150, height: 150)
                         }

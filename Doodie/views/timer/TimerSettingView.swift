@@ -8,8 +8,9 @@
 import SwiftUI
 
 struct TimerSettingView: View {
+    
     @State private var selectedTime: Double = 30
-    @Binding var isProgress : Bool
+    @EnvironmentObject var timerViewModel : TimerViewModel
     
     var body: some View {
         VStack{
@@ -68,7 +69,7 @@ struct TimerSettingView: View {
 //            }
             Button(action: {
                 print("시작하기: \(selectedTime)분 타이머 시작")
-                isProgress = true
+                timerViewModel.startActivity()
             }) {
                 HStack {
                     Text("🚀 시작하기")
@@ -89,6 +90,5 @@ struct TimerSettingView: View {
 
 
 #Preview {
-    @State var val = true
-    TimerSettingView(isProgress: $val)
+    TimerSettingView()
 }

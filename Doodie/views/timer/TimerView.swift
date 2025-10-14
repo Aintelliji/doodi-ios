@@ -9,11 +9,9 @@ import SwiftUI
 
 struct TimerView: View {
     @Environment(\.dismiss) var dismiss
-    @State var isProgress : Bool
     
-    var activityIconUrl: String = "💪"
-    var activityName : String = "운동"
-    var activityDescription: String = "몸을 움직여 건강해져요"
+    @StateObject var timerViewModel = TimerViewModel()
+    var activityDto: ActivityDto
     
     
     var body: some View {
@@ -24,12 +22,12 @@ struct TimerView: View {
             // 선택한 활동 설명
             VStack{
                 // Image("") 아이콘...
-                Text(activityIconUrl)
+                Text(activityDto.activityIconUrl)
                     .font(.title)
-                Text(activityName)
+                Text(activityDto.activityName)
                     .font(.title2)
                     .fontWeight(.bold)
-                Text(activityDescription)
+                Text(activityDto.activityDescription)
                     .foregroundStyle(.gray)
             }
             .padding(.horizontal, 100)// geometry같은걸로 전체 너비 구해서 빼기?;;
@@ -41,11 +39,12 @@ struct TimerView: View {
             // 타이머부분
             // 진행중이면 진행 창 및 활동 중지 버튼
             // 진행중이 아니면 타이머 설정 버튼
-            if(isProgress){
+            switch timerViewModel.timerViewStatus{
+            case .TimerSetting:
+                TimerSettingView().padding(20)
+                    .environmentObject(timerViewModel)
+            case .TimerProgress:
                 TimerProgressView(totalTime: 100).padding(20)
-                
-            }else{
-                TimerSettingView(isProgress: $isProgress).padding(20)
             }
             
             Spacer()
@@ -58,5 +57,5 @@ struct TimerView: View {
 }
 
 #Preview {
-    TimerView(isProgress: true)
+    TimerView(activityDto: ActivityDto(activityIconUrl: "💪", activityName: "운동하기", activityDescription: "몸을 움직여 건강해져요"))
 }
