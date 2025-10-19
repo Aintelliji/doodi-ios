@@ -11,12 +11,13 @@ struct Toolbar: View {
     
     var title: String
     var description: String
-    var onBack: () -> Void //뒤로가기 액션 전달
+    @Binding var path: [ViewPath]
+//    var onBack: () -> Void //뒤로가기 액션 전달
     
     var body: some View {
         // 커스텀 툴바
         HStack {
-            Button(action: onBack) {
+            Button(action: {path.removeLast()}) {
                     Image(systemName: "arrow.backward")
                     .tint(.black)
             }.padding(.trailing, 20)
@@ -36,6 +37,7 @@ struct Toolbar: View {
 }
 
 #Preview {
-    Toolbar(title: "어떤 활동을 할까요?", description: "오늘의 활동을 골라주세요!", onBack: {})
+    @State var path: [ViewPath] = [ViewPath(type: .activity, timerValue: nil)]
+    Toolbar(title: "어떤 활동을 할까요?", description: "오늘의 활동을 골라주세요!", path: $path)
 }
 

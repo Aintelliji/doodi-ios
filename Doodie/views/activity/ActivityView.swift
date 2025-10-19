@@ -9,125 +9,124 @@ import SwiftUI
 
 struct ActivityView: View {
     
-    // 현재 화면을 닫을 수 있는 환경 변수
-    @Environment(\.dismiss) var dismiss
-    @StateObject var activityViewModel = ActivityViewModel()
+    @Binding var path: [ViewPath]
+    @Bindable var activityViewModel = ActivityViewModel()
     
-
     var body: some View {
-        
-        NavigationStack{
-            VStack{
-                
-                // 툴바
-                Toolbar(title: "어떤 활동을 할까요?", description: "오늘 할 활동을 골라주세요!", onBack:{dismiss()})
-                
-                Spacer()
-                // 추천 메세지
-                Text("💡 \(activityViewModel.getRecommendMsg())")
-                    .padding(20)
-                    .background(
-                        RoundedRectangle(cornerRadius: 20)
-                            .fill(.white)
-                            .shadow(radius: 10)
-                    )
-                
-                // 챗봇 이동
-                NavigationLink(destination: HomeView()){
-                    ZStack{
-                        RoundedRectangle(cornerRadius: 20)
-                            .fill(.white)
-                            .frame(width: .infinity, height: 100)
-                            .shadow(radius: 10)
-                        
-                        WaveBackgroundView()
-                            .frame(width: .infinity, height: 100)
-                        
-                        
-                        HStack{
-                            Text("🤖")
-                                .font(.title)
-                            Text("AI에게 물어보기")
-                                .font(.title)
-                                .foregroundStyle(.black)
-                                .fontWeight(.bold)
-                        }
-                    }.padding(.horizontal, 20)
-                        .padding(.top, 30)
-                }
-                
-                // 기본 활동
-                Grid{
-                    // 첫번째 열
-                    GridRow{
-                        Spacer()
-                        NavigationLink(destination: TimerView(activityDto: activityViewModel.activityList[0])){
-                            
-                            let activity = activityViewModel.activityList[0]
-                            ActivityCardView(activityIcon: activity.activityIconUrl, activityName: activity.activityName, cardBackgroundColor: Color.lightPink)
-                                .foregroundStyle(.black)
-                                .frame(width: 150, height: 150)
-                        }
-                        
-                        Spacer()
-                        
-                        NavigationLink(destination: TimerView(activityDto: activityViewModel.activityList[1])){
-                            
-                            let activity = activityViewModel.activityList[1]
-                            ActivityCardView(activityIcon: activity.activityIconUrl, activityName: activity.activityName, cardBackgroundColor: Color.lightPurple)
-                                .foregroundStyle(.black)
-                                .frame(width: 150, height: 150)
-                        }
-                        Spacer()
-                    }.frame(width: .infinity, height: 150)
+        VStack{
+            // 툴바
+            Toolbar(title: "어떤 활동을 할까요?", description: "오늘 할 활동을 골라주세요!", path: $path)
+            
+            Spacer()
+            // 추천 메세지
+            Text("💡 \(activityViewModel.recommendMsg)")
+                .padding(20)
+                .background(
+                    RoundedRectangle(cornerRadius: 20)
+                        .fill(.white)
+                        .shadow(radius: 10)
+                )
+            
+            // 챗봇 이동
+            NavigationLink(value: ViewPath(type: .chatBot, timerValue: nil)){
+                ZStack{
+                    RoundedRectangle(cornerRadius: 20)
+                        .fill(.white)
+                        .frame(width: .infinity, height: 100)
+                        .shadow(radius: 10)
                     
-                    // 두번째 열
-                    GridRow{
-                        Spacer()
-                        NavigationLink(destination: TimerView(activityDto: activityViewModel.activityList[2])){
-                            let activity = activityViewModel.activityList[2]
-                            ActivityCardView(activityIcon: activity.activityIconUrl, activityName: activity.activityName, cardBackgroundColor: Color.lightYellow)
-                                .foregroundStyle(.black)
-                                .frame(width: 150, height: 150)
-                        }
-                        Spacer()
-                        NavigationLink(destination: TimerView(activityDto: activityViewModel.activityList[3])){
-                            let activity = activityViewModel.activityList[3]
-                            
-                            ActivityCardView(activityIcon: activity.activityIconUrl, activityName: activity.activityName, cardBackgroundColor: Color.skyBlue)
-                                .foregroundStyle(.black)
-                                .frame(width: 150, height: 150)
-                        }
-                        Spacer()
-                    }.frame(width: .infinity, height: 150)
-                }.padding(.vertical, 20)
-                
-                // 앱 이용 팁
-                Text("💡 활동을 선택하면 타이머를 설정할 수 있어요")
-                    .padding(20)
-                    .background(
-                        RoundedRectangle(cornerRadius: 20)
-                            .fill(.white)
-                            .shadow(radius: 10)
-                    )
-                Spacer()
-                
-                
+                    WaveBackgroundView()
+                        .frame(width: .infinity, height: 100)
+                    
+                    
+                    HStack{
+                        Text("🤖")
+                            .font(.title)
+                        Text("AI에게 물어보기")
+                            .font(.title)
+                            .foregroundStyle(.black)
+                            .fontWeight(.bold)
+                    }
+                }.padding(.horizontal, 20)
+                    .padding(.top, 30)
             }
-            .navigationBarBackButtonHidden(true) // 기존 네비게이션 바 숨김
-            .background(
-                LinearGradient(colors: [.lightYellow, .lightPink, .lightPurple], startPoint: .topLeading, endPoint: .bottomTrailing)
-            )
-            .frame(maxWidth: .infinity, maxHeight: .infinity)
+            
+            // 기본 활동
+            Grid{
+                // 첫번째 열
+                GridRow{
+                    Spacer()
+                    NavigationLink(destination: Text("임시")){
+                        //                        NavigationLink(destination: TimerView(activityId: 1)){
+                        
+                        let activity = activityViewModel.activityList[0]
+                        ActivityCardView(activityIcon: activity.activityIconUrl, activityName: activity.activityName, cardBackgroundColor: Color.lightPink)
+                            .foregroundStyle(.black)
+                            .frame(width: 150, height: 150)
+                    }
+                    
+                    Spacer()
+                    NavigationLink(destination: Text("임시")){
+                        //                        NavigationLink(destination: TimerView(activityId: 2)){
+                        
+                        let activity = activityViewModel.activityList[1]
+                        ActivityCardView(activityIcon: activity.activityIconUrl, activityName: activity.activityName, cardBackgroundColor: Color.lightPurple)
+                            .foregroundStyle(.black)
+                            .frame(width: 150, height: 150)
+                    }
+                    Spacer()
+                }.frame(width: .infinity, height: 150)
+                
+                // 두번째 열
+                GridRow{
+                    Spacer()
+                    NavigationLink(destination: Text("임시")){
+                        //                        NavigationLink(destination: TimerView(activityId: 3)){
+                        let activity = activityViewModel.activityList[2]
+                        ActivityCardView(activityIcon: activity.activityIconUrl, activityName: activity.activityName, cardBackgroundColor: Color.lightYellow)
+                            .foregroundStyle(.black)
+                            .frame(width: 150, height: 150)
+                    }
+                    Spacer()
+                    NavigationLink(destination: Text("임시")){
+                        //                        NavigationLink(destination: TimerView(activityId: 4)){
+                        let activity = activityViewModel.activityList[3]
+                        
+                        ActivityCardView(activityIcon: activity.activityIconUrl, activityName: activity.activityName, cardBackgroundColor: Color.skyBlue)
+                            .foregroundStyle(.black)
+                            .frame(width: 150, height: 150)
+                    }
+                    Spacer()
+                }.frame(width: .infinity, height: 150)
+            }.padding(.vertical, 20)
+            
+            // 앱 이용 팁
+            Text("💡 활동을 선택하면 타이머를 설정할 수 있어요")
+                .padding(20)
+                .background(
+                    RoundedRectangle(cornerRadius: 20)
+                        .fill(.white)
+                        .shadow(radius: 10)
+                )
+            Spacer()
+            
+            
         }
-        
+        .navigationBarBackButtonHidden(true) // 기존 네비게이션 바 숨김
+        .background(
+            LinearGradient(colors: [.lightYellow, .lightPink, .lightPurple], startPoint: .topLeading, endPoint: .bottomTrailing)
+        )
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
     }
-        
+    
+    
     
 }
 
 #Preview {
-    ActivityView()
+    @Previewable @State var path : [ViewPath] = [ViewPath(type: .activity, timerValue: nil)]
+    ActivityView(path: $path)
+    
 }
 
 struct WaveShape: Shape {

@@ -7,12 +7,11 @@
 
 import SwiftUI
 
-struct ChatMessageDto: View {
-    var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
-    }
-}
-
-#Preview {
-    ChatMessageDto()
+struct ChatMessage: Identifiable {
+    var id = UUID()
+    var text: String
+    var time: Date = Date()
+    var isMine: Bool
+    var isActivity: Bool // --> Activity면 말풍선 모양 달리하기... Navigation Link로 감싼 형태 나오기...
+    //이미지..? ㅠ
 }

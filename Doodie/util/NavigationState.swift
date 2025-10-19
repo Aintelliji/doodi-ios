@@ -6,6 +6,18 @@
 //
 import SwiftUI
 
-class NavigationState: ObservableObject {
-    @Published var path = NavigationPath()
+enum ViewPathType: Hashable {
+    case login
+    case homeView
+    case activity
+    case chatBot
+    case timerView(activityId: Float)
+    case resultView
+}
+
+
+
+struct ViewPath: Hashable {
+    let type: ViewPathType
+    let timerValue: Float?
 }

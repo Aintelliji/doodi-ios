@@ -8,12 +8,16 @@
 import SwiftUI
 
 // 뷰모델이 뷰에 변경을 알릴 수 있게
-final class ActivityViewModel : ObservableObject{
+@Observable
+final class ActivityViewModel{
     
     var activityList : [ActivityDto] = []
+    var recommendMsg: String = ""
     
     init() {
+        print("액티비티 뷰모델 생성")
         activityList = getActivityList()
+        recommendMsg = getRecommendMsg()
     }
     
     func getRecommendMsg() -> String{
@@ -30,10 +34,10 @@ final class ActivityViewModel : ObservableObject{
         
         // 길이 4개 아니면 오류처리~
         
-        return [ActivityDto(activityIconUrl: "💪", activityName: "운동하기", activityDescription: "몸을 움직여 건강해져요"),
-                ActivityDto(activityIconUrl: "📚", activityName: "책 읽기", activityDescription: "마음의 양식을 채워요"),
-                ActivityDto(activityIconUrl: "🎹", activityName: "악기 연주", activityDescription: "룰루랄랄라"),
-                ActivityDto(activityIconUrl: "🏓", activityName: "뭐가좋을까", activityDescription: "뭐가좋을까")
+        return [ActivityDto(activityId: 1, activityIconUrl: "💪", activityName: "운동하기", activityDescription: "몸을 움직여 건강해져요"),
+                ActivityDto(activityId: 2,activityIconUrl: "📚", activityName: "책 읽기", activityDescription: "마음의 양식을 채워요"),
+                ActivityDto(activityId: 3,activityIconUrl: "🎹", activityName: "악기 연주", activityDescription: "룰루랄랄라"),
+                ActivityDto(activityId: 4, activityIconUrl: "🏓", activityName: "뭐가좋을까", activityDescription: "뭐가좋을까")
         ]
     }
     

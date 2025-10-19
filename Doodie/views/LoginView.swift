@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct LoginView: View {
+    
     @State private var bounce = false
     
     var body: some View {

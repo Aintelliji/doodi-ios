@@ -8,8 +8,7 @@
 import SwiftUI
 
 struct HomeView: View {
-    
-    
+    @State var path : [ViewPath] = []
     @StateObject var homeViewModel = HomeViewModel()
     
     @State private var selectedTab = 0
@@ -18,7 +17,7 @@ struct HomeView: View {
     
     var body: some View {
         // 전체를 Navigation Stack으로 감싼다.
-        NavigationStack{
+        NavigationStack(path: $path){
             
             ScrollView{
                 
@@ -69,12 +68,12 @@ struct HomeView: View {
                     
                     
                     
-                    
-                    
                     // 활동 상태창
                     switch homeViewModel.activityStatusViewState{
                     case .NewActivity:
-                        NavigationLink(destination: ActivityView()){
+                        Button{
+                            path.append(ViewPath(type: .activity, timerValue: nil))
+                        }label: {
                             ZStack{
                                 // 베경
                                 RoundedRectangle(cornerRadius: 24)
@@ -94,9 +93,33 @@ struct HomeView: View {
                                             .foregroundStyle(.gray)
                                     }
                                     Spacer()
-                                }
-                            }
-                            .frame(height: 100)
+                                }.frame(height: 100)
+                        }
+                        
+                        
+//                        NavigationLink(destination: ActivityView()){
+//                            ZStack{
+//                                // 베경
+//                                RoundedRectangle(cornerRadius: 24)
+//                                    .fill(.white)
+//                                    .shadow(radius: 10)
+//                                HStack{
+//                                    Spacer()
+//                                    Image("Logo-ani")
+//                                        .resizable()
+//                                        .frame(width: 50, height: 50)
+//                                    VStack(alignment: .leading){
+//                                        Text("새로운 활동 시작")
+//                                            .font(.title3)
+//                                            .fontWeight(.bold)
+//                                            .foregroundStyle(.black)
+//                                        Text("휴대폰을 잠시 내려두고 성장해보세요")
+//                                            .foregroundStyle(.gray)
+//                                    }
+//                                    Spacer()
+//                                }
+//                            }
+//                            .frame(height: 100)
                             
                         }
                         .padding(.bottom, 20)
@@ -150,16 +173,41 @@ struct HomeView: View {
             } // scroll view
             .background(
                 LinearGradient(colors: [.lightYellow, .lightPink, .lightPurple], startPoint: .topLeading, endPoint: .bottomTrailing)
-            )
+            ).navigationDestination(for: ViewPath.self){ route in
+                
+                switch route.type {
+                   
+                case .login:
+                    LoginView()
+                case .homeView:
+                    HomeView()
+                case .activity:
+//                    Text("임시")
+                    ActivityView(path: $path)
+                case .chatBot:
+                    //ChatBotView(path: $path)
+                    Text("임시")
+                case .timerView(let activityId):
+                    Text("임시")
+//                    TimerView(path: $path, activityId: route.timerValue)
+                case .resultView:
+                    ResultView(activityDto: ActivityDto(activityId: 1, activityIconUrl: "💪", activityName: "운동하기", activityDescription: "몸을 움직여 건강해져요"), activityTime: 1, exp: 1, maxExp: 1, remainingExp: 1, recordText: "")
+                    
+                }
+            }
         } // navigation stack
         .navigationBarBackButtonHidden(true) // 기존 네비게이션 바 숨김
+        
         
     }
 }
 
 
 #Preview {
-    HomeView()
+    NavigationStack{
+        HomeView()
+    }
+
 }
 
 
