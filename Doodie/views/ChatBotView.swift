@@ -38,12 +38,13 @@ struct ChatBotView: View {
                                 // msg의 isActivity가 false면 일반 말풍선
                                 // true면 활동 말풍선
                                 if(msg.isActivity){
-//                                    NavigationLink(destination: Text("임시")){
-////                                    NavigationLink(destination: TimerView(path: $path, activityId: 4)){
-////                                        ActivityBurbble(message: msg)
-//                                            .transition(.move(edge: msg.isMine ? .trailing : .leading).combined(with: .opacity))
-//                                            .id(msg.id)
-//                                    }
+                                    Button{
+                                        path.append(ViewPath(type: .timerView(activityId: 1)))
+                                    } label: {
+                                        ActivityBurbble(message: msg)
+                                            .transition(.move(edge: msg.isMine ? .trailing : .leading).combined(with: .opacity))
+                                            .id(msg.id)
+                                    }
                                     
                                 }else{
                                     ChatBubble(message: msg)

@@ -68,9 +68,9 @@ struct ActivityView: View {
                     }
                     
                     Spacer()
-                    NavigationLink(destination: Text("임시")){
-                        //                        NavigationLink(destination: TimerView(activityId: 2)){
-                        
+                    Button{
+                        path.append(ViewPath(type: .timerView(activityId: 2)))
+                    }label: {
                         let activity = activityViewModel.activityList[1]
                         ActivityCardView(activityIcon: activity.activityIconUrl, activityName: activity.activityName, cardBackgroundColor: Color.lightPurple)
                             .foregroundStyle(.black)
@@ -82,16 +82,18 @@ struct ActivityView: View {
                 // 두번째 열
                 GridRow{
                     Spacer()
-                    NavigationLink(destination: Text("임시")){
-                        //                        NavigationLink(destination: TimerView(activityId: 3)){
+                    Button{
+                        path.append(ViewPath(type: .timerView(activityId: 3)))
+                    }label: {
                         let activity = activityViewModel.activityList[2]
                         ActivityCardView(activityIcon: activity.activityIconUrl, activityName: activity.activityName, cardBackgroundColor: Color.lightYellow)
                             .foregroundStyle(.black)
                             .frame(width: 150, height: 150)
                     }
                     Spacer()
-                    NavigationLink(destination: Text("임시")){
-                        //                        NavigationLink(destination: TimerView(activityId: 4)){
+                    Button{
+                        path.append(ViewPath(type: .timerView(activityId: 4)))
+                    }label: {
                         let activity = activityViewModel.activityList[3]
                         
                         ActivityCardView(activityIcon: activity.activityIconUrl, activityName: activity.activityName, cardBackgroundColor: Color.skyBlue)
