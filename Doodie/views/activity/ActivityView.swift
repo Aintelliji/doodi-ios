@@ -28,7 +28,9 @@ struct ActivityView: View {
                 )
             
             // 챗봇 이동
-            NavigationLink(value: ViewPath(type: .chatBot, timerValue: nil)){
+            Button{
+                path.append(ViewPath(type: .chatBot, timerValue: nil))
+            }label: {
                 ZStack{
                     RoundedRectangle(cornerRadius: 20)
                         .fill(.white)

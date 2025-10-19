@@ -185,7 +185,7 @@ struct HomeView: View {
 //                    Text("임시")
                     ActivityView(path: $path)
                 case .chatBot:
-                    //ChatBotView(path: $path)
+                    ChatBotView(path: $path)
                     Text("임시")
                 case .timerView(let activityId):
                     Text("임시")
