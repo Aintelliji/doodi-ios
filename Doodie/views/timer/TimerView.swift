@@ -1,78 +1,79 @@
-////
-////  TimerView.swift
-////  Doodie
-////
-////  Created by 수진 on 10/12/25.
-////
 //
-//import SwiftUI
+//  TimerView.swift
+//  Doodie
 //
-//struct TimerView: View {
-//    @Environment(\.dismiss) var dismiss
-//    @Binding var path: [ViewPath]
-//    @StateObject var timerViewModel : TimerViewModel
-//    
-//    init(path: [ViewPath], activityId: Float) {
-//        _timerViewModel = StateObject(wrappedValue: TimerViewModel(activityId: activityId))
-//        self.path = [ViewPath(type: .timerView(activityId: activityId), timerValue: activityId)]
-//    }
-//    
-//    
-//    var body: some View {
-//        NavigationStack{
-//            
-//            
-//            VStack{
-//                // 툴바
-//                Toolbar(title: "타이머 ⏰", description: "집중해서 활동해보세요", path: $path)
-//                
-//                // 선택한 활동 설명
-//                VStack{
-//                    // Image("") 아이콘...
-//                    Text(timerViewModel.activityDto.activityIconUrl)
-//                        .font(.title)
-//                    Text(timerViewModel.activityDto.activityName)
-//                        .font(.title2)
-//                        .fontWeight(.bold)
-//                    Text(timerViewModel.activityDto.activityDescription)
-//                        .foregroundStyle(.gray)
-//                }
-//                .padding(.horizontal, 100)// geometry같은걸로 전체 너비 구해서 빼기?;;
-//                .padding(.vertical, 32)
-//                .background(RoundRectangle_20_Shadow(width: .infinity, height: 150, color: Color.lightYellow))
-//                
-//                // RoundRectangle_20_Shadow(width: .infinity, height: 150, color: Color.cyan)
-//                
-//                // 타이머부분
-//                // 진행중이면 진행 창 및 활동 중지 버튼
+//  Created by 수진 on 10/12/25.
+//
+
+import SwiftUI
+
+struct TimerView: View {
+    
+    @Binding var path: [ViewPath]
+    var activityId : Float
+    @Bindable var timerViewModel : TimerViewModel
+
+    init(path: Binding<[ViewPath]>, activityId: Float) {
+        self._path = path
+        self.activityId = activityId
+        // TimerViewModel 초기화
+        self._timerViewModel = Bindable(TimerViewModel(activityId: activityId))
+    }
+
+    
+    var body: some View {
+            
+            VStack{
+                // 툴바
+                Toolbar(title: "타이머 ⏰", description: "집중해서 활동해보세요", path: $path)
+                
+                // 선택한 활동 설명
+                VStack{
+                    // Image("") 아이콘...
+                    Text(timerViewModel.activityDto.activityIconUrl)
+                        .font(.title)
+                    Text(timerViewModel.activityDto.activityName)
+                        .font(.title2)
+                        .fontWeight(.bold)
+                    Text(timerViewModel.activityDto.activityDescription)
+                        .foregroundStyle(.gray)
+                }
+                .padding(.horizontal, 100)// geometry같은걸로 전체 너비 구해서 빼기?;;
+                .padding(.vertical, 32)
+                .background(RoundRectangle_20_Shadow(width: .infinity, height: 150, color: Color.lightYellow))
+                
+                // RoundRectangle_20_Shadow(width: .infinity, height: 150, color: Color.cyan)
+                
+                // 타이머부분
+                // 진행중이면 진행 창 및 활동 중지 버튼
 //                // 진행중이 아니면 타이머 설정 버튼
-//                switch timerViewModel.timerViewStatus{
-//                case .TimerSetting:
-//                    TimerSettingView().padding(20)
-//                        .environmentObject(timerViewModel)
-//                case .TimerProgress:
-//                    TimerProgressView().padding(20)
-//                        .environmentObject(timerViewModel)
-//                }
-//                
-//                Spacer()
-//                
-//                
-//   
-//            }
-//            .navigationBarBackButtonHidden(true) // 기존 네비게이션 바 숨김
-//            .background(
-//                LinearGradient(colors: [.lightYellow, .lightPink, .lightPurple], startPoint: .topLeading, endPoint: .bottomTrailing)
-//            )
-//        }.onChange(of: timerViewModel.endActivityEventStatus) { newStatus in
-//            switch newStatus {
-//            case .Finished, .EarlyFinished:
-//               // path.append(.resultView)
-//                break
-//            default:
-//                break
-//            }
-//        }
-//    }
-//}
-//
+                switch timerViewModel.timerViewStatus{
+                case .TimerSetting:
+                    TimerSettingView().padding(20)
+                        .environment(timerViewModel)
+                case .TimerProgress:
+                    TimerProgressView().padding(20)
+                        .environment(timerViewModel)
+                }
+                
+                Spacer()
+                
+                
+   
+            }
+            .navigationBarBackButtonHidden(true) // 기존 네비게이션 바 숨김
+            .background(
+                LinearGradient(colors: [.lightYellow, .lightPink, .lightPurple], startPoint: .topLeading, endPoint: .bottomTrailing)
+            )
+        .onChange(of: timerViewModel.endActivityEventStatus) { newStatus in
+            switch newStatus {
+            case .Finished, .EarlyFinished:
+               // path.append(.resultView)
+                break
+            default:
+                break
+            }
+        }
+    }
+}
+

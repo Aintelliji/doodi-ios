@@ -37,7 +37,7 @@ struct Toolbar: View {
 }
 
 #Preview {
-    @State var path: [ViewPath] = [ViewPath(type: .activity, timerValue: nil)]
+    @State var path: [ViewPath] = [ViewPath(type: .activity)]
     Toolbar(title: "어떤 활동을 할까요?", description: "오늘의 활동을 골라주세요!", path: $path)
 }
 

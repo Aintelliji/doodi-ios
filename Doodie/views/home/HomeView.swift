@@ -72,7 +72,7 @@ struct HomeView: View {
                     switch homeViewModel.activityStatusViewState{
                     case .NewActivity:
                         Button{
-                            path.append(ViewPath(type: .activity, timerValue: nil))
+                            path.append(ViewPath(type: .activity))
                         }label: {
                             ZStack{
                                 // 베경
@@ -188,8 +188,7 @@ struct HomeView: View {
                     ChatBotView(path: $path)
                     Text("임시")
                 case .timerView(let activityId):
-                    Text("임시")
-//                    TimerView(path: $path, activityId: route.timerValue)
+                    TimerView(path: $path, activityId: activityId)
                 case .resultView:
                     ResultView(activityDto: ActivityDto(activityId: 1, activityIconUrl: "💪", activityName: "운동하기", activityDescription: "몸을 움직여 건강해져요"), activityTime: 1, exp: 1, maxExp: 1, remainingExp: 1, recordText: "")
                     

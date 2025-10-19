@@ -29,7 +29,7 @@ struct ActivityView: View {
             
             // 챗봇 이동
             Button{
-                path.append(ViewPath(type: .chatBot, timerValue: nil))
+                path.append(ViewPath(type: .chatBot))
             }label: {
                 ZStack{
                     RoundedRectangle(cornerRadius: 20)
@@ -58,9 +58,9 @@ struct ActivityView: View {
                 // 첫번째 열
                 GridRow{
                     Spacer()
-                    NavigationLink(destination: Text("임시")){
-                        //                        NavigationLink(destination: TimerView(activityId: 1)){
-                        
+                    Button{
+                        path.append(ViewPath(type: .timerView(activityId: 1)))
+                    }label: {
                         let activity = activityViewModel.activityList[0]
                         ActivityCardView(activityIcon: activity.activityIconUrl, activityName: activity.activityName, cardBackgroundColor: Color.lightPink)
                             .foregroundStyle(.black)
@@ -77,7 +77,7 @@ struct ActivityView: View {
                             .frame(width: 150, height: 150)
                     }
                     Spacer()
-                }.frame(width: .infinity, height: 150)
+                }
                 
                 // 두번째 열
                 GridRow{
@@ -99,7 +99,7 @@ struct ActivityView: View {
                             .frame(width: 150, height: 150)
                     }
                     Spacer()
-                }.frame(width: .infinity, height: 150)
+                }
             }.padding(.vertical, 20)
             
             // 앱 이용 팁
@@ -126,7 +126,7 @@ struct ActivityView: View {
 }
 
 #Preview {
-    @Previewable @State var path : [ViewPath] = [ViewPath(type: .activity, timerValue: nil)]
+    @Previewable @State var path : [ViewPath] = [ViewPath(type: .activity)]
     ActivityView(path: $path)
     
 }

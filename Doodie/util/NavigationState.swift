@@ -19,5 +19,5 @@ enum ViewPathType: Hashable {
 
 struct ViewPath: Hashable {
     let type: ViewPathType
-    let timerValue: Float?
+   // let timerValue: Float?
 }

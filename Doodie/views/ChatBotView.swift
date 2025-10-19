@@ -121,7 +121,7 @@ struct ChatBotView: View {
 }
 
 #Preview {
-    @State var path : [ViewPath] = [ViewPath(type: .activity, timerValue: nil), ViewPath(type: .chatBot, timerValue: nil)]
+    @State var path : [ViewPath] = [ViewPath(type: .activity), ViewPath(type: .chatBot)]
     ChatBotView(path: $path)
         
 }
