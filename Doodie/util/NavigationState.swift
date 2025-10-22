@@ -11,7 +11,7 @@ enum ViewPathType: Hashable {
     case homeView
     case activity
     case chatBot
-    case timerView(activityId: Float)
+    case timerView(activityId: String)
     case resultView
 }
 

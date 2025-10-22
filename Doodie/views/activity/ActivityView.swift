@@ -54,55 +54,61 @@ struct ActivityView: View {
             }
             
             // 기본 활동
-            Grid{
-                // 첫번째 열
-                GridRow{
-                    Spacer()
-                    Button{
-                        path.append(ViewPath(type: .timerView(activityId: 1)))
-                    }label: {
-                        let activity = activityViewModel.activityList[0]
-                        ActivityCardView(activityIcon: activity.activityIconUrl, activityName: activity.activityName, cardBackgroundColor: Color.lightPink)
-                            .foregroundStyle(.black)
-                            .frame(width: 150, height: 150)
+            if(!activityViewModel.activityList.isEmpty){
+                Grid{
+                    // 첫번째 열
+                    GridRow{
+                        Spacer()
+                        Button{
+                            path.append(ViewPath(type: .timerView(activityId: activityViewModel.activityList[0].activityId!)))
+                        }label: {
+                            let activity = activityViewModel.activityList[0]
+                            
+                            ActivityCardView(activityIcon: activity.activityIconUrl, activityName: activity.activityName, cardBackgroundColor: Color.lightPink)
+                                .foregroundStyle(.black)
+                                .frame(width: 150, height: 150)
+                        }
+                        
+                        Spacer()
+                        Button{
+                            path.append(ViewPath(type: .timerView(activityId: activityViewModel.activityList[1].activityId!)))
+                        }label: {
+                            let activity = activityViewModel.activityList[1]
+                            
+                            ActivityCardView(activityIcon: activity.activityIconUrl, activityName: activity.activityName, cardBackgroundColor: Color.lightPurple)
+                                .foregroundStyle(.black)
+                                .frame(width: 150, height: 150)
+                        }
+                        Spacer()
                     }
                     
-                    Spacer()
-                    Button{
-                        path.append(ViewPath(type: .timerView(activityId: 2)))
-                    }label: {
-                        let activity = activityViewModel.activityList[1]
-                        ActivityCardView(activityIcon: activity.activityIconUrl, activityName: activity.activityName, cardBackgroundColor: Color.lightPurple)
-                            .foregroundStyle(.black)
-                            .frame(width: 150, height: 150)
+                    // 두번째 열
+                    GridRow{
+                        Spacer()
+                        Button{
+                            path.append(ViewPath(type: .timerView(activityId: activityViewModel.activityList[2].activityId!)))
+                        }label: {
+                            let activity = activityViewModel.activityList[2]
+                            
+                            ActivityCardView(activityIcon: activity.activityIconUrl, activityName: activity.activityName, cardBackgroundColor: Color.lightYellow)
+                                .foregroundStyle(.black)
+                                .frame(width: 150, height: 150)
+                        }
+                        Spacer()
+                        Button{
+                            path.append(ViewPath(type: .timerView(activityId: activityViewModel.activityList[3].activityId!)))
+                        }label: {
+                            let activity = activityViewModel.activityList[3]
+                            
+                            ActivityCardView(activityIcon: activity.activityIconUrl, activityName: activity.activityName, cardBackgroundColor: Color.skyBlue)
+                                .foregroundStyle(.black)
+                                .frame(width: 150, height: 150)
+                        }
+                        Spacer()
                     }
-                    Spacer()
-                }
-                
-                // 두번째 열
-                GridRow{
-                    Spacer()
-                    Button{
-                        path.append(ViewPath(type: .timerView(activityId: 3)))
-                    }label: {
-                        let activity = activityViewModel.activityList[2]
-                        ActivityCardView(activityIcon: activity.activityIconUrl, activityName: activity.activityName, cardBackgroundColor: Color.lightYellow)
-                            .foregroundStyle(.black)
-                            .frame(width: 150, height: 150)
-                    }
-                    Spacer()
-                    Button{
-                        path.append(ViewPath(type: .timerView(activityId: 4)))
-                    }label: {
-                        let activity = activityViewModel.activityList[3]
-                        
-                        ActivityCardView(activityIcon: activity.activityIconUrl, activityName: activity.activityName, cardBackgroundColor: Color.skyBlue)
-                            .foregroundStyle(.black)
-                            .frame(width: 150, height: 150)
-                    }
-                    Spacer()
-                }
-            }.padding(.vertical, 20)
+                }.padding(.vertical, 20)
+            }
+            
             
             // 앱 이용 팁
             Text("💡 활동을 선택하면 타이머를 설정할 수 있어요")
@@ -121,6 +127,10 @@ struct ActivityView: View {
             LinearGradient(colors: [.lightYellow, .lightPink, .lightPurple], startPoint: .topLeading, endPoint: .bottomTrailing)
         )
         .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .task{
+            activityViewModel.getRecommendMsg()
+            await activityViewModel.getActivityList()
+        }
     }
     
     

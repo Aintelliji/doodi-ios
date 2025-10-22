@@ -10,10 +10,10 @@ import SwiftUI
 struct TimerView: View {
     
     @Binding var path: [ViewPath]
-    var activityId : Float
+    var activityId : String
     @Bindable var timerViewModel : TimerViewModel
 
-    init(path: Binding<[ViewPath]>, activityId: Float) {
+    init(path: Binding<[ViewPath]>, activityId: String) {
         self._path = path
         self.activityId = activityId
         // TimerViewModel 초기화

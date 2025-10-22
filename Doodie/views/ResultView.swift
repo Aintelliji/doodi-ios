@@ -9,7 +9,7 @@ import SwiftUI
 
 struct ResultView: View {
     
-    var activityDto = ActivityDto(activityId: 1, activityIconUrl: "💪", activityName: "운동", activityDescription: "건강해져봅시다. 다이어트 좀 합시다.")
+    var activityDto = ActivityDto(activityId: "1", activityIconUrl: "💪", activityName: "운동", activityDescription: "건강해져봅시다. 다이어트 좀 합시다.")
     
     var activityTime: Int = 30
     // 획득한 경험치 - 서버에서 받아옴..!
@@ -163,7 +163,7 @@ struct ResultView: View {
 }
 
 #Preview {
-    var activityDto = ActivityDto(activityId: 1, activityIconUrl: "💪", activityName: "운동", activityDescription: "건강해져봅시다. 다이어트 좀 합시다.")
+    var activityDto = ActivityDto(activityId: "1", activityIconUrl: "💪", activityName: "운동", activityDescription: "건강해져봅시다. 다이어트 좀 합시다.")
     ResultView(activityDto: activityDto, exp: 50, maxExp: 50, remainingExp: 50)
 }
 
