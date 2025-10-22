@@ -54,6 +54,12 @@ struct TimerView: View {
                 case .TimerProgress:
                     TimerProgressView().padding(20)
                         .environment(timerViewModel)
+                        .onAppear{
+                            // 이렇게 하니까 TimerView가 새로그려지나봐... ViewModel도 다시 불러와짐...
+//                            if let last = path.last {
+//                                path = [last]
+//                            }
+                        }
                 }
                 
                 Spacer()
@@ -68,10 +74,11 @@ struct TimerView: View {
         .onChange(of: timerViewModel.endActivityEventStatus) { newStatus in
             switch newStatus {
             case .Finished, .EarlyFinished:
-               // path.append(.resultView)
-                break
-            default:
-                break
+//               path.append(.resultView)
+            print("End")
+            case .NotEnded:
+  //              path.append(.resultView)
+                print("Not Ended")
             }
         }
     }

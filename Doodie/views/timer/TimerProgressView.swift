@@ -11,7 +11,7 @@ struct TimerProgressView: View {
     @Environment(TimerViewModel.self) var timerViewModel
     
     var body: some View {
-        NavigationStack{
+
             VStack{
                
                 CircularTimerView(totalTime: timerViewModel.activityDto.totalTime ?? 60, timeRemaining: timerViewModel.activityDto.remainingTime ?? 60)
@@ -59,8 +59,7 @@ struct TimerProgressView: View {
             }.navigationBarBackButtonHidden(true) // 기존 네비게이션 바 숨김
         }
 
-        
-    }
+    
 }
 
 

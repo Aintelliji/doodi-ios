@@ -9,7 +9,7 @@ import SwiftUI
 
 struct TimerSettingView: View {
     
-    @State private var selectedTime: Double = 30
+    @State private var selectedTime: Double = 10
     @Environment(TimerViewModel.self) var timerViewModel
     
     var body: some View {

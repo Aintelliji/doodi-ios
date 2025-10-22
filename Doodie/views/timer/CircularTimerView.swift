@@ -70,7 +70,7 @@ struct CircularTimerView: View {
         Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { timer in
             if timeRemaining > 0 {
                 timeRemaining -= 1
-                timerViewModel.activityDto.remainingTime = timeRemaining
+//                timerViewModel.activityDto.remainingTime = timeRemaining
                 // 아 부하 장난아닐거같은데...... 계속 뷰 업데이트 할텐데 안보이니깐 괜찮을지두
             } else {
                 timer.invalidate()
@@ -90,5 +90,5 @@ struct CircularTimerView: View {
 
 
 #Preview {
-    CircularTimerView(totalTime: 100, timeRemaining: 10)
+    CircularTimerView(totalTime: 20, timeRemaining: 10)
 }

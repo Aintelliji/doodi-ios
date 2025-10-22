@@ -20,6 +20,7 @@ final class TimerViewModel{
     
     init(activityId: Float) {
         getActivityById(id: activityId)
+        print("🔥 TimerViewModel init called")
     }
     
     // 활동이 진행중인지 조회 - 홈이랑 중복임...
@@ -61,8 +62,9 @@ final class TimerViewModel{
         // 초단위로 보냄.
         
         // isProgress = true 로 변경해야됨.
+        timerViewStatus = .TimerProgress // 임시
         // 1. 서버에서 또 바로 조회하기?
-        getIsProgress()
+        // getIsProgress()
         // 2. 내부 로컬에 가지고 있기..? --> 서버 호출 시점만 조절
     }
     
