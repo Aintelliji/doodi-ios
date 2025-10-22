@@ -11,18 +11,30 @@ struct ContentView: View {
     
     // 회원 관련 뷰모델
     // 임시
-    var isLogin = false
+    @State var isLogin = false
     
     
     var body: some View {
-        if (isLogin) {
-            HomeView()
-        }else{
-            LoginView()
+        if(!isLogin){
+            Button{
+                isLogin.toggle()
+            } label: {
+                Text("로그인여부: \(isLogin)")
+            }
         }
-    }
+        
+            if (isLogin) {
+                HomeView().tint(.black)
+            }else{
+                LoginView()
+            }
+        }
+
 }
+
 
 #Preview {
     ContentView()
 }
+
+

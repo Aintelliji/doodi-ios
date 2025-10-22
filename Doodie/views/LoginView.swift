@@ -8,11 +8,11 @@
 import SwiftUI
 
 struct LoginView: View {
+    
     @State private var bounce = false
     
     var body: some View {
         
-        NavigationStack{
             VStack{
                 Spacer()
                 
@@ -104,7 +104,7 @@ struct LoginView: View {
             .background(LinearGradient(gradient: Gradient(colors: [Color("Light-Yellow"), Color("Light-Pink"), Color("Light-Purple")]), startPoint: .topLeading, endPoint: .bottomTrailing))
         }
 
-    }
+    
 }
 
 #Preview {

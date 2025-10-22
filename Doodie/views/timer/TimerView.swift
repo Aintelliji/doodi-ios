@@ -8,55 +8,79 @@
 import SwiftUI
 
 struct TimerView: View {
-    @Environment(\.dismiss) var dismiss
-    @State var isProgress : Bool
     
-    var activityIconUrl: String = "💪"
-    var activityName : String = "운동"
-    var activityDescription: String = "몸을 움직여 건강해져요"
-    
+    @Binding var path: [ViewPath]
+    var activityId : Float
+    @Bindable var timerViewModel : TimerViewModel
+
+    init(path: Binding<[ViewPath]>, activityId: Float) {
+        self._path = path
+        self.activityId = activityId
+        // TimerViewModel 초기화
+        self._timerViewModel = Bindable(TimerViewModel(activityId: activityId))
+    }
+
     
     var body: some View {
-        VStack{
-            // 툴바
-            Toolbar(title: "타이머 ⏰", description: "집중해서 활동해보세요", onBack:{dismiss()})
             
-            // 선택한 활동 설명
             VStack{
-                // Image("") 아이콘...
-                Text(activityIconUrl)
-                    .font(.title)
-                Text(activityName)
-                    .font(.title2)
-                    .fontWeight(.bold)
-                Text(activityDescription)
-                    .foregroundStyle(.gray)
-            }
-            .padding(.horizontal, 100)// geometry같은걸로 전체 너비 구해서 빼기?;;
-            .padding(.vertical, 32)
-            .background(RoundRectangle_20_Shadow(width: .infinity, height: 150, color: Color.lightYellow))
-            
-            // RoundRectangle_20_Shadow(width: .infinity, height: 150, color: Color.cyan)
-            
-            // 타이머부분
-            // 진행중이면 진행 창 및 활동 중지 버튼
-            // 진행중이 아니면 타이머 설정 버튼
-            if(isProgress){
-                TimerProgressView(totalTime: 100).padding(20)
+                // 툴바
+                Toolbar(title: "타이머 ⏰", description: "집중해서 활동해보세요", path: $path)
                 
-            }else{
-                TimerSettingView(isProgress: $isProgress).padding(20)
+                // 선택한 활동 설명
+                VStack{
+                    // Image("") 아이콘...
+                    Text(timerViewModel.activityDto.activityIconUrl)
+                        .font(.title)
+                    Text(timerViewModel.activityDto.activityName)
+                        .font(.title2)
+                        .fontWeight(.bold)
+                    Text(timerViewModel.activityDto.activityDescription)
+                        .foregroundStyle(.gray)
+                }
+                .padding(.horizontal, 100)// geometry같은걸로 전체 너비 구해서 빼기?;;
+                .padding(.vertical, 32)
+                .background(RoundRectangle_20_Shadow(width: .infinity, height: 150, color: Color.lightYellow))
+                
+                // RoundRectangle_20_Shadow(width: .infinity, height: 150, color: Color.cyan)
+                
+                // 타이머부분
+                // 진행중이면 진행 창 및 활동 중지 버튼
+//                // 진행중이 아니면 타이머 설정 버튼
+                switch timerViewModel.timerViewStatus{
+                case .TimerSetting:
+                    TimerSettingView().padding(20)
+                        .environment(timerViewModel)
+                case .TimerProgress:
+                    TimerProgressView().padding(20)
+                        .environment(timerViewModel)
+                        .onAppear{
+                            // 이렇게 하니까 TimerView가 새로그려지나봐... ViewModel도 다시 불러와짐...
+//                            if let last = path.last {
+//                                path = [last]
+//                            }
+                        }
+                }
+                
+                Spacer()
+                
+                
+   
             }
-            
-            Spacer()
+            .navigationBarBackButtonHidden(true) // 기존 네비게이션 바 숨김
+            .background(
+                LinearGradient(colors: [.lightYellow, .lightPink, .lightPurple], startPoint: .topLeading, endPoint: .bottomTrailing)
+            )
+        .onChange(of: timerViewModel.endActivityEventStatus) { newStatus in
+            switch newStatus {
+            case .Finished, .EarlyFinished:
+//               path.append(.resultView)
+            print("End")
+            case .NotEnded:
+  //              path.append(.resultView)
+                print("Not Ended")
+            }
         }
-        .navigationBarBackButtonHidden(true) // 기존 네비게이션 바 숨김
-        .background(
-            LinearGradient(colors: [.lightYellow, .lightPink, .lightPurple], startPoint: .topLeading, endPoint: .bottomTrailing)
-        )
     }
 }
 
-#Preview {
-    TimerView(isProgress: true)
-}

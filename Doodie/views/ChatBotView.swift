@@ -10,9 +10,11 @@ import SwiftUI
 struct ChatBotView: View {
     @State var question: String = ""
     @State var isInit: Bool = true
+    
+    @Binding var path: [ViewPath]
     @Environment(\.dismiss) var dismiss
     
-    @State private var messages: [ChatMessage] = [
+    var messages: [ChatMessage] = [
         ChatMessage(text: "안녕하세요! 저는 여러분의 활동 도우미 두디 봇이에요 🤖 \n오늘 어떤 활동을 하고 싶으신지 말씀해주세요!", isMine: false, isActivity: false),
         ChatMessage(text: "안녕하세요! 반갑습니다.", isMine: true, isActivity: false),
         ChatMessage(text: "다음의 활동은 어떠세요?", isMine: false, isActivity: false),
@@ -24,10 +26,9 @@ struct ChatBotView: View {
         @FocusState private var isFocused: Bool
     
     var body: some View {
-        NavigationStack{
             VStack{
                 // 툴바
-                Toolbar(title: "AI 활동 도우미", description: "맞춤 활동을 찾아드려요", onBack:{dismiss()})
+                Toolbar(title: "AI 활동 도우미", description: "맞춤 활동을 찾아드려요",path: $path)
            
                 // 채팅창
                 ScrollViewReader { scrollProxy in
@@ -37,17 +38,9 @@ struct ChatBotView: View {
                                 // msg의 isActivity가 false면 일반 말풍선
                                 // true면 활동 말풍선
                                 if(msg.isActivity){
-                                    var tmp : [String]{
-                                        msg.text.split(separator: ",").map{String($0)}
-                                    }
-                                    var title : String {
-                                        tmp[0]
-                                    }
-                                    var des : String {
-                                        tmp[1]
-                                    }
-                                    
-                                    NavigationLink(destination: TimerView(isProgress: false, activityIconUrl: "🎀", activityName: title, activityDescription: des)){
+                                    Button{
+                                        path.append(ViewPath(type: .timerView(activityId: 1)))
+                                    } label: {
                                         ActivityBurbble(message: msg)
                                             .transition(.move(edge: msg.isMine ? .trailing : .leading).combined(with: .opacity))
                                             .id(msg.id)
@@ -119,26 +112,22 @@ struct ChatBotView: View {
                     .padding(20)
             }.background(
                 LinearGradient(colors: [.lightYellow, .lightPink, .lightPurple], startPoint: .topLeading, endPoint: .bottomTrailing)
-            )
+            ).navigationBarBackButtonHidden(true) // 기존 네비게이션 바 숨김
+            .ignoresSafeArea(.keyboard)
         }
-        .navigationBarBackButtonHidden(true) // 기존 네비게이션 바 숨김
-        .ignoresSafeArea(.keyboard)
         
-    }
+       
+        
+    
 }
 
 #Preview {
-    ChatBotView()
+    @State var path : [ViewPath] = [ViewPath(type: .activity), ViewPath(type: .chatBot)]
+    ChatBotView(path: $path)
+        
 }
 
-struct ChatMessage: Identifiable {
-    let id = UUID()
-    let text: String
-    let time: Date = Date()
-    let isMine: Bool
-    let isActivity :Bool // --> Activity면 말풍선 모양 달리하기... Navigation Link로 감싼 형태 나오기...
-    //이미지..? ㅠ
-}
+
 // MARK: - 채팅 말풍선
 struct ChatBubble: View {
     let message: ChatMessage

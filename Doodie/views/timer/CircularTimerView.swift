@@ -10,9 +10,11 @@ import SwiftUI
 import SwiftUI
 
 struct CircularTimerView: View {
+    @Environment(TimerViewModel.self) var timerViewModel
+    
     // 초단위
-    var totalTime: Double = 50
-    @State var timeRemaining: Double = 50
+    var totalTime: Double
+    @State var timeRemaining: Double
 
     
     var body: some View {
@@ -68,8 +70,11 @@ struct CircularTimerView: View {
         Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { timer in
             if timeRemaining > 0 {
                 timeRemaining -= 1
+//                timerViewModel.activityDto.remainingTime = timeRemaining
+                // 아 부하 장난아닐거같은데...... 계속 뷰 업데이트 할텐데 안보이니깐 괜찮을지두
             } else {
                 timer.invalidate()
+                timerViewModel.endActivity()
             }
         }
     }
@@ -85,5 +90,5 @@ struct CircularTimerView: View {
 
 
 #Preview {
-    CircularTimerView()
+    CircularTimerView(totalTime: 20, timeRemaining: 10)
 }
