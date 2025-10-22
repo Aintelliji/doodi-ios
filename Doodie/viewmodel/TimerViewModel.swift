@@ -11,6 +11,9 @@ import SwiftUI
 @Observable
 final class TimerViewModel{
     
+    private let userRepository = UserRepository()
+    private let activityRepository = ActivityRepository()
+    
     // 얘가 바뀌면 뷰가 자동으로 업데이트 됨.
     var timerViewStatus : TimerViewStatus = .TimerSetting
     var endActivityEventStatus: EndActivityEventStatus = .NotEnded
@@ -18,26 +21,28 @@ final class TimerViewModel{
     
     var activityDto: ActivityDto = ActivityDto(activityId: "0", activityIconUrl: "", activityName: "", activityDescription: "")
     
-    init(activityId: String) {
-        getActivityById(id: activityId)
-        print("🔥 TimerViewModel init called")
+    init(activity: ActivityDto) {
+//        getActivityById(id: activityId)
+  //      print("🔥 TimerViewModel init called")
+        activityDto = activity
     }
     
-    // 활동이 진행중인지 조회 - 홈이랑 중복임...
 
-    func getIsProgress(){
 
-        
+    func getIsProgress() async {
         // 헤더에 토큰 넣어서 사용자 인증
         // 서버에 요청
-        var isProgress = true
+        guard var isProgress = await userRepository.getProgressState() else {return}
         
         // 진행중이면 getActivityId로 활동 정보 가져오기.
         // 아니면 프론트에서 넘어온 값 세팅하기.
-        
         if(!isProgress){
             timerViewStatus = .TimerSetting
         }else{
+            // 진행중이면 이 때 activityId 불러오기.  유저꺼
+            // 접속한 유저의 활동을 먼저 불러옴.
+            guard let activityId = await userRepository.getProgressingActivityId() else { return }
+            activityDto = await getActivityById(id: activityId)
             timerViewStatus = .TimerProgress
         }
     }
@@ -52,10 +57,10 @@ final class TimerViewModel{
     // 하 미친.. 챗봇이 새로운 활동을 준다..
     // 그냥 거기서 새로 생성되어야지 뭐... 뒷단은 알아서 ㅎ 안쓰는 활동은 삭제하던지..
     
-    func getActivityById(id: String) -> ActivityDto{
+    func getActivityById(id: String) async -> ActivityDto{
         // 0을 넘기면? 아니다. 사용자 정보 가져와서 가지고 있는 다음에 그걸 보내자!!
         // 그 외는 이거
-        activityDto = ActivityDto(activityId: id, activityIconUrl: "💪", activityName: "운동하기", activityDescription: "몸을 움직여 건강해져요", totalTime: 100, remainingTime: 80)
+        await activityRepository.getData()
         
         
         return activityDto

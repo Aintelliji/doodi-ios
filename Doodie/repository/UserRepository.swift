@@ -20,7 +20,20 @@ struct UserRepository{
     func getProgressState() async -> Bool?  {
         do{
             let doc = try await userTable.getDocument()
-            return try doc.data(as: UserDto.self).isProgress
+           // return try doc.data(as: UserDto.self).isProgress
+        return true
+        }catch{
+            print("ERROR: \(error.localizedDescription)")
+            return nil
+        }
+        
+        
+    }
+    
+    func getProgressingActivityId() async -> String?  {
+        do{
+            let doc = try await userTable.getDocument()
+            return try doc.data(as: UserDto.self).progressingActivityId
         
         }catch{
             print("ERROR: \(error.localizedDescription)")

@@ -60,7 +60,7 @@ struct ActivityView: View {
                     GridRow{
                         Spacer()
                         Button{
-                            path.append(ViewPath(type: .timerView(activityId: activityViewModel.activityList[0].activityId!)))
+                            path.append(ViewPath(type: .timerView(activity: activityViewModel.activityList[0])))
                         }label: {
                             let activity = activityViewModel.activityList[0]
                             
@@ -71,7 +71,7 @@ struct ActivityView: View {
                         
                         Spacer()
                         Button{
-                            path.append(ViewPath(type: .timerView(activityId: activityViewModel.activityList[1].activityId!)))
+                            path.append(ViewPath(type: .timerView(activity: activityViewModel.activityList[1])))
                         }label: {
                             let activity = activityViewModel.activityList[1]
                             
@@ -86,7 +86,7 @@ struct ActivityView: View {
                     GridRow{
                         Spacer()
                         Button{
-                            path.append(ViewPath(type: .timerView(activityId: activityViewModel.activityList[2].activityId!)))
+                            path.append(ViewPath(type: .timerView(activity: activityViewModel.activityList[2])))
                         }label: {
                             let activity = activityViewModel.activityList[2]
                             
@@ -96,7 +96,7 @@ struct ActivityView: View {
                         }
                         Spacer()
                         Button{
-                            path.append(ViewPath(type: .timerView(activityId: activityViewModel.activityList[3].activityId!)))
+                            path.append(ViewPath(type: .timerView(activity: activityViewModel.activityList[3])))
                         }label: {
                             let activity = activityViewModel.activityList[3]
                             

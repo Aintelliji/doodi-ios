@@ -12,5 +12,5 @@ struct UserDto : Codable{
     
     @DocumentID var userId : String?
     var isProgress : Bool
-    var progressingActivityId : Float
+    var progressingActivityId : String
 }

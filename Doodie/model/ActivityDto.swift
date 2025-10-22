@@ -6,7 +6,7 @@
 //
 import FirebaseFirestoreSwift
 
-struct ActivityDto : Codable {
+struct ActivityDto : Codable, Equatable, Hashable {
 //    @DocumentID var userId: String?
     @DocumentID var activityId: String?
     var activityIconUrl: String //Img url

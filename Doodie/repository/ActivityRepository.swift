@@ -31,5 +31,17 @@ struct ActivityRepository{
         
     }
     
+    func getDataById(id: String) async -> ActivityDto{
+        do{
+            let doc = try await activityTable.document(id).getDocument()
+            return try doc.data(as: ActivityDto.self)
+            
+        }catch{
+            print("datas get Error: \(error.localizedDescription)")
+        }
+        
+        return ActivityDto(activityId: "", activityIconUrl: "", activityName: "", activityDescription: "")
+    }
+    
 
 }

@@ -10,14 +10,13 @@ import SwiftUI
 struct TimerView: View {
     
     @Binding var path: [ViewPath]
-    var activityId : String
+//    var activityId : String
     @Bindable var timerViewModel : TimerViewModel
 
-    init(path: Binding<[ViewPath]>, activityId: String) {
+    init(path: Binding<[ViewPath]>, activity: ActivityDto) {
         self._path = path
-        self.activityId = activityId
         // TimerViewModel 초기화
-        self._timerViewModel = Bindable(TimerViewModel(activityId: activityId))
+        self._timerViewModel = Bindable(TimerViewModel(activity: activity))
     }
 
     
