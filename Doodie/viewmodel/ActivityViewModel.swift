@@ -12,12 +12,19 @@ import SwiftUI
 final class ActivityViewModel{
     
     var activityList : [ActivityDto] = []
+    
     var recommendMsg: String = ""
     private let activityRepository = ActivityRepository()
     
 //    init() {
 //        recommendMsg = getRecommendMsg()
 //    }
+    init(){
+        getRecommendMsg()
+        Task{
+            await getActivityList()
+        }
+    }
     
     func getRecommendMsg() {
         // 해당 사용자 토큰 --> 사용자에게 맞는 메세지

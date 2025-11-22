@@ -10,16 +10,20 @@ import Foundation
 
 enum ActivityRouter: URLRequestConvertible {
     
+    case getActivityTypes
     case getActivitiesById(activityId: Int)
 
     private var method: HTTPMethod {
         switch self {
+        case .getActivityTypes: return .get
         case .getActivitiesById: return .get
         }
     }
 
     private var path: String {
         switch self {
+        case .getActivityTypes:
+            return "/activity-types"
         case .getActivitiesById(let activityId):
             return "/activities/\(activityId)"
         }
@@ -27,6 +31,8 @@ enum ActivityRouter: URLRequestConvertible {
 
     private var parameters: Parameters? {
         switch self {
+        case .getActivityTypes:
+            return nil
         case .getActivitiesById(let activityId):
             return nil
         }
@@ -34,6 +40,8 @@ enum ActivityRouter: URLRequestConvertible {
 
     private var encoding: ParameterEncoding {
         switch self {
+        case .getActivityTypes:
+            return URLEncoding.default
         case .getActivitiesById:
             return URLEncoding.default
         }

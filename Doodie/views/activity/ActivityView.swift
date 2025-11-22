@@ -127,10 +127,10 @@ struct ActivityView: View {
             LinearGradient(colors: [.lightYellow, .lightPink, .lightPurple], startPoint: .topLeading, endPoint: .bottomTrailing)
         )
         .frame(maxWidth: .infinity, maxHeight: .infinity)
-        .task{
-            activityViewModel.getRecommendMsg()
-            await activityViewModel.getActivityList()
-        }
+//        .task{
+//            activityViewModel.getRecommendMsg()
+//            await activityViewModel.getActivityList()
+//        }
     }
     
     

@@ -19,14 +19,28 @@ struct ActivityRepository{
     
     func getData() async -> [ActivityDto]{
         do{
-            let datas = try await activityTable.getDocuments()
-            let activities = datas.documents.compactMap{ doc in
-                try? doc.data(as: ActivityDto.self)
-            }
-            return activities
+            let activityTypes = try await APIClient.shared.request(ActivityRouter.getActivityTypes, type: [ActivityTypeResponse].self)
+
+   
+                //self.characterInfo?.characterImgUrl = ""
+                let activityList : [ActivityDto] =  activityTypes.map{ type in
+                    ActivityDto(activityId: "\(type.id)"
+                                ,activityIconUrl: "",
+                                activityName: type.code, activityDescription: "")
+                }
+                
+                print("디버그: \(activityTypes[0].code)")
+                
+                return activityList
+
+            
+        }catch let apiError as APIError{
+            
+            // api 에러 메세지 출력
         }catch{
-            print("datas get Error: \(error.localizedDescription)")
+            print("활동타입들 가져오기 에러: "+error.localizedDescription)
         }
+        
         return []
         
     }
