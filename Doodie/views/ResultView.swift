@@ -9,6 +9,7 @@ import SwiftUI
 
 struct ResultView: View {
     
+    @Binding var path: [ViewPath]
     var activityDto = ActivityDto(activityId: "1", activityIconUrl: "💪", activityName: "운동", activityDescription: "건강해져봅시다. 다이어트 좀 합시다.")
     
     var activityTime: Int = 30
@@ -138,7 +139,7 @@ struct ResultView: View {
             
             // 홈화면 이동
             Button{
-                
+                path.removeAll()
             } label: {
                 Text("🏠 홈 화면으로 이동")
                     .foregroundStyle(.black)
@@ -163,8 +164,9 @@ struct ResultView: View {
 }
 
 #Preview {
+    @Previewable @State var path : [ViewPath] = [ViewPath(type: .activity)]
     var activityDto = ActivityDto(activityId: "1", activityIconUrl: "💪", activityName: "운동", activityDescription: "건강해져봅시다. 다이어트 좀 합시다.")
-    ResultView(activityDto: activityDto, exp: 50, maxExp: 50, remainingExp: 50)
+    ResultView(path: $path, activityDto: activityDto, exp: 50, maxExp: 50, remainingExp: 50)
 }
 
 

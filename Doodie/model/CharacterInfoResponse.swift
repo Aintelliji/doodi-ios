@@ -6,3 +6,14 @@
 //
 
 import Foundation
+
+struct CharacterInfoResponse: Decodable {
+    let characterId: Int
+    let userId: Int
+    let level: Int
+    let exp: Int
+    let evolutionStageId: Int
+    let evolutionStageCode: String
+    let evolutionStageMinLevel: Int
+    let evolutionStageAssetKey: String
+}

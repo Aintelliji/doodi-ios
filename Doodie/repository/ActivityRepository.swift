@@ -43,5 +43,21 @@ struct ActivityRepository{
         return ActivityDto(activityId: "", activityIconUrl: "", activityName: "", activityDescription: "")
     }
     
+    func postActivity(activityDto: ActivityDto){
+        activityTable.addDocument(data: [
+            "activityId": activityDto.activityId,
+            "activityName": activityDto.activityName,
+            "activityIconUrl": activityDto.activityIconUrl,
+            "activityDescription": activityDto.activityDescription,
+            "totalTime": activityDto.totalTime,
+            "remainingTime": activityDto.remainingTime,
+            
+        ]){
+            err in
+            if let err = err {
+                print(err)
+            }
+        }
+    }
 
 }

@@ -35,4 +35,15 @@ final class ActivityViewModel{
          
     }
     
+    func getActivityById(activityId : Int) async {
+        do{
+//            let data : ActivityDto = try await APIClient.shared.request(ActivityRouter.getActivitiesById(activityId: activityId))
+//            self.activityList = data
+        }catch{
+            
+        }
+    }
+    
+    
+    
 }

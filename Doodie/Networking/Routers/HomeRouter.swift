@@ -8,33 +8,33 @@
 import Alamofire
 import Foundation
 
-enum ActivityRouter: URLRequestConvertible {
+enum HomeRouter: URLRequestConvertible {
     
-    case getActivitiesById(activityId: Int)
+    case getCharacterInfo
 
     private var method: HTTPMethod {
         switch self {
-        case .getActivitiesById: return .get
+        case .getCharacterInfo: return .get
         }
     }
 
     private var path: String {
         switch self {
-        case .getActivitiesById(let activityId):
-            return "/activities/\(activityId)"
+        case .getCharacterInfo:
+            return "/characters/me"
         }
     }
 
     private var parameters: Parameters? {
         switch self {
-        case .getActivitiesById(let activityId):
+        case .getCharacterInfo:
             return nil
         }
     }
 
     private var encoding: ParameterEncoding {
         switch self {
-        case .getActivitiesById:
+        case .getCharacterInfo:
             return URLEncoding.default
         }
     }

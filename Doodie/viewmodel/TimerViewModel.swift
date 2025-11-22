@@ -14,12 +14,16 @@ final class TimerViewModel{
     private let userRepository = UserRepository()
     private let activityRepository = ActivityRepository()
     
+    
+    
     // 얘가 바뀌면 뷰가 자동으로 업데이트 됨.
     var timerViewStatus : TimerViewStatus = .TimerSetting
     var endActivityEventStatus: EndActivityEventStatus = .NotEnded
-    var isFinished = false
+
+    var activityDto: ActivityDto = ActivityDto(activityId: "0", activityIconUrl: "", activityName: "", activityDescription: "", totalTime: nil, remainingTime: nil)
     
-    var activityDto: ActivityDto = ActivityDto(activityId: "0", activityIconUrl: "", activityName: "", activityDescription: "")
+    // 상태 관리용 (화면은 딴데서 그리니까 구독 x)
+    @ObservationIgnored var remainingTime: Double = 0
     
     init(activity: ActivityDto) {
 //        getActivityById(id: activityId)
@@ -73,22 +77,27 @@ final class TimerViewModel{
         let newActivityDto = ActivityDto(activityId: "0", activityIconUrl: activityDto.activityIconUrl, activityName: activityDto.activityName, activityDescription: activityDto.activityDescription, totalTime: selectedTime*60, remainingTime: selectedTime*60)
         // 초단위로 보냄.
         
+        // 내부 dto 업데이트
+        // 화면 변경용
+        self.activityDto = newActivityDto
+        
         // isProgress = true 로 변경해야됨.
         timerViewStatus = .TimerProgress // 임시
         // 1. 서버에서 또 바로 조회하기?
+        activityRepository.postActivity(activityDto: newActivityDto)
         // getIsProgress()
         // 2. 내부 로컬에 가지고 있기..? --> 서버 호출 시점만 조절
     }
     
     // 활동 종료
     func endActivity(){
-        isFinished = true
-        if activityDto.remainingTime! <= 0 {
+        
+        if self.remainingTime < 1 {
             // 활동 잘 종료..
 //          박수 페이지..?로 이동
             endActivityEventStatus = .Finished
         }else{
-            // 활동 잘 종료..
+            // 활동 미리 종료..
             // 그냥 종료 페이지로 이동..
             endActivityEventStatus = .EarlyFinished
         }

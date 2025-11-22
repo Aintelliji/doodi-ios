@@ -11,28 +11,29 @@ struct ContentView: View {
     
     // 회원 관련 뷰모델
     // 임시
-
     
-    let userRepository = UserRepository()
+    
+//    let userRepository = UserRepository()
     @State var isLogin: Bool
     
     var body: some View {
         VStack{
             
-                if (isLogin) {
-                    HomeView().tint(.black)
-                }else{
-                    LoginView()
-                }
+            if (isLogin) {
+                HomeView().tint(.black)
+            }else{
+                LoginView()
+            }
         }.onAppear{
             Task{
-                isLogin = await userRepository.getProgressState() ?? false
+                //  isLogin = await userRepository.getProgressState() ?? true
+                isLogin = true
             }
-           
+            
         }
         
     }
-
+    
 }
 
 

@@ -6,3 +6,9 @@
 //
 
 import Foundation
+
+enum APIError: Error {
+    case serverError(message: String)
+    case decodingError
+    case unknown
+}
