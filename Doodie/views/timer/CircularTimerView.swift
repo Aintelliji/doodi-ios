@@ -70,8 +70,8 @@ struct CircularTimerView: View {
         Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { timer in
             if timeRemaining > 0 {
                 timeRemaining -= 1
-//                timerViewModel.activityDto.remainingTime = timeRemaining
-                // 아 부하 장난아닐거같은데...... 계속 뷰 업데이트 할텐데 안보이니깐 괜찮을지두
+                timerViewModel.remainingTime = timeRemaining
+                // 구독 안하는 값인데 계속 업데이트
             } else {
                 timer.invalidate()
                 timerViewModel.endActivity()

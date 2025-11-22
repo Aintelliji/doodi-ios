@@ -7,10 +7,11 @@
 
 import SwiftUI
 
+@MainActor
 struct HomeView: View {
     @State var path : [ViewPath] = []
-    @StateObject var homeViewModel = HomeViewModel()
-    
+    @StateObject private var homeViewModel = HomeViewModel()
+
     @State private var selectedTab = 0
     
     let tabTitles = ["기록", "업적", "달력"]
@@ -187,10 +188,10 @@ struct HomeView: View {
                 case .chatBot:
                     ChatBotView(path: $path)
                     Text("임시")
-                case .timerView(let activityId):
-                    TimerView(path: $path, activityId: activityId)
+                case .timerView(let activityDto):
+                    TimerView(path: $path, activity: activityDto)
                 case .resultView:
-                    ResultView(activityDto: ActivityDto(activityId: 1, activityIconUrl: "💪", activityName: "운동하기", activityDescription: "몸을 움직여 건강해져요"), activityTime: 1, exp: 1, maxExp: 1, remainingExp: 1, recordText: "")
+                    ResultView(path: $path, activityDto: ActivityDto(activityId: "1", activityIconUrl: "💪", activityName: "운동하기", activityDescription: "몸을 움직여 건강해져요"), activityTime: 1, exp: 1, maxExp: 1, remainingExp: 1, recordText: "")
                     
                 }
             }

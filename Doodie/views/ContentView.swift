@@ -11,30 +11,34 @@ struct ContentView: View {
     
     // 회원 관련 뷰모델
     // 임시
-    @State var isLogin = false
     
+    
+//    let userRepository = UserRepository()
+    @State var isLogin: Bool
     
     var body: some View {
-        if(!isLogin){
-            Button{
-                isLogin.toggle()
-            } label: {
-                Text("로그인여부: \(isLogin)")
-            }
-        }
-        
+        VStack{
+            
             if (isLogin) {
                 HomeView().tint(.black)
             }else{
                 LoginView()
             }
+        }.onAppear{
+            Task{
+                //  isLogin = await userRepository.getProgressState() ?? true
+                isLogin = true
+            }
+            
         }
-
+        
+    }
+    
 }
 
 
 #Preview {
-    ContentView()
+    ContentView(isLogin: false)
 }
 
 

@@ -17,23 +17,10 @@ struct TimerProgressView: View {
                 CircularTimerView(totalTime: timerViewModel.activityDto.totalTime ?? 60, timeRemaining: timerViewModel.activityDto.remainingTime ?? 60)
                     .environment(timerViewModel)
                 
-                // 버튼
-//                NavigationLink(destination: ResultView(exp: 100, maxExp: 200, remainingExp: 50)){
-//                    HStack {
-//                        Text("활동 종료")
-//                            .fontWeight(.semibold)
-//                            .foregroundColor(.black)
-//                    }
-//                    .frame(maxWidth: .infinity)
-//                    .padding()
-//                    .background(Color.white)
-//                    .cornerRadius(20)
-//                    .shadow(color: .gray, radius: 4, x: 0, y: 4)
-//                }.padding(.top, 24)
                 
                 Button(action: {
                     // 활동 종료 후
-                    timerViewModel.endActivity( )
+                    timerViewModel.endActivity()
                     // 경험치 받아서..?
                     // 결과화면에 주입 혹은 결과화면으로 이동, 활동 id 주입
                 }) {

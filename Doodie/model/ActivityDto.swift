@@ -4,9 +4,11 @@
 //
 //  Created by 수진 on 10/12/25.
 //
+import FirebaseFirestoreSwift
 
-struct ActivityDto : Decodable{
-    var activityId: Float
+struct ActivityDto : Codable, Equatable, Hashable {
+//    @DocumentID var userId: String?
+    @DocumentID var activityId: String?
     var activityIconUrl: String //Img url
     var activityName: String // 활동명
     var activityDescription: String // 활동 설명

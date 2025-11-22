@@ -1,0 +1,14 @@
+//
+//  APIError.swift
+//  Doodie
+//
+//  Created by 수진 on 11/22/25.
+//
+
+import Foundation
+
+enum APIError: Error {
+    case serverError(message: String)
+    case decodingError
+    case unknown
+}
