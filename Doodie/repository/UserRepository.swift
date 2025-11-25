@@ -17,6 +17,21 @@ struct UserRepository{
         self.userTable = db.collection("user").document("user1")
     }
     
+    
+    func getCharactierInfo() async -> CharacterInfoResponse?{
+        do{
+            let characterInfoResponse = try await APIClient.shared.request(HomeRouter.getCharacterInfo, type: CharacterInfoResponse.self)
+            return characterInfoResponse
+            
+        }catch{
+            
+        }
+
+        return nil
+    }
+    
+    
+    
     func getProgressState() async -> Bool?  {
         do{
             let doc = try await userTable.getDocument()

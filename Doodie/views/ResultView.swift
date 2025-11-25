@@ -10,13 +10,24 @@ import SwiftUI
 struct ResultView: View {
     
     @Binding var path: [ViewPath]
-    var activityDto = ActivityDto(activityId: "1", activityIconUrl: "💪", activityName: "운동", activityDescription: "건강해져봅시다. 다이어트 좀 합시다.")
+    @Bindable var resultViewModel : ResultViewModel
+//    var activityDto = ActivityDto(activityId: "1", activityIconUrl: "💪", activityName: "운동", activityDescription: "건강해져봅시다. 다이어트 좀 합시다.", typeId: 1)
+    var result : ResultDto
+    var completeMin: Int
     
-    var activityTime: Int = 30
-    // 획득한 경험치 - 서버에서 받아옴..!
-    var exp: Int
-    var maxExp: Int // 현재 레벨 최대 경험치
-    var remainingExp: Int // 레벨업까지 남은 경험치
+    init(path: Binding<[ViewPath]>, result: ResultDto) {
+        self._path = path
+        self.result = result
+        self._resultViewModel = Bindable(ResultViewModel())
+        completeMin = (Int(result.activity.totalTime ?? 0) - Int(result.activity.remainingTime ?? 0))/60
+    }
+    
+
+//    var activityTime: Int = 30
+//    // 획득한 경험치 - 서버에서 받아옴..!
+//    var exp: Int
+//    var maxExp: Int // 현재 레벨 최대 경험치
+//    var remainingExp: Int // 레벨업까지 남은 경험치
     
     @State var recordText : String = ""
     
@@ -27,12 +38,12 @@ struct ResultView: View {
                 // 선택한 활동
                 VStack{
                     // Image("") 아이콘...
-                    Text(activityDto.activityIconUrl)
+                    Text(result.activity.activityIconUrl)
                         .font(.title)
-                    Text(activityDto.activityName)
+                    Text(result.activity.activityName)
                         .font(.title2)
                         .fontWeight(.bold)
-                    Text(activityDto.activityDescription)
+                    Text(result.activity.activityDescription)
                         .frame(alignment: .center)
                         .foregroundStyle(.white)
                 }
@@ -40,7 +51,7 @@ struct ResultView: View {
             
                 VStack{
                     // 아 변환 작업 또 해야겠네..;;
-                    Text("\(activityTime)분")
+                    Text("\(completeMin)분")
                         .font(.title)
                         .fontWeight(.bold)
                     Text("완료했어요!")
@@ -62,12 +73,12 @@ struct ResultView: View {
                 Text("경험치 획득!")
                     .font(.title2)
                     .fontWeight(.semibold)
-                Text("+\(exp) EXP")
+                Text("+\(result.expEarned) EXP")
                     .font(.largeTitle)
                     .fontWeight(.bold)
                     .foregroundStyle(.orange)
                 CustomExpBar()
-                Text("레벨업까지 \(remainingExp)EXP 남음")
+                Text("레벨업까지 \(resultViewModel.remainingExp)EXP 남음")
                     .foregroundStyle(.gray)
             }.padding(20)
                 .background(RoundRectangle_20_Shadow(width: .infinity, height: .infinity, color: .white))
@@ -164,9 +175,9 @@ struct ResultView: View {
 }
 
 #Preview {
-    @Previewable @State var path : [ViewPath] = [ViewPath(type: .activity)]
-    var activityDto = ActivityDto(activityId: "1", activityIconUrl: "💪", activityName: "운동", activityDescription: "건강해져봅시다. 다이어트 좀 합시다.")
-    ResultView(path: $path, activityDto: activityDto, exp: 50, maxExp: 50, remainingExp: 50)
+//    @Previewable @State var path : [ViewPath] = [ViewPath(type: .activity)]
+//    var activityDto = ActivityDto(activityId: "1", activityIconUrl: "💪", activityName: "운동", activityDescription: "건강해져봅시다. 다이어트 좀 합시다.", typeId: 1)
+//    ResultView(path: $path, activityDto: activityDto, exp: 50, maxExp: 50, remainingExp: 50)
 }
 
 

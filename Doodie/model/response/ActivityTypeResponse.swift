@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct ActivityTypeResponse: Codable {
+struct ActivityTypeResponse: Decodable {
     let id: Int
     let code: String
 }

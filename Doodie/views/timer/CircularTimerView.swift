@@ -74,16 +74,23 @@ struct CircularTimerView: View {
                 // 구독 안하는 값인데 계속 업데이트
             } else {
                 timer.invalidate()
-                timerViewModel.endActivity()
+                Task{
+                    await timerViewModel.endActivity()
+                }
+                
             }
         }
     }
     
     func makeMinute(timeRemaining : Double) -> Int{
-        var minute = Int(timeRemaining)/60
-        while(minute >= 60){
-            minute/=60
+        var min = Int(timeRemaining)
+        if(timeRemaining > 3600){
+            min = min - Int(timeRemaining/3600)*3600
         }
+        var minute = min/60
+//        while(minute >= 60){
+//            minute/=60
+//        }
         return minute
     }
 }

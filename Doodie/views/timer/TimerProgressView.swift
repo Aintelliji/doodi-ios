@@ -20,7 +20,10 @@ struct TimerProgressView: View {
                 
                 Button(action: {
                     // 활동 종료 후
-                    timerViewModel.endActivity()
+                    Task{
+                        await timerViewModel.endActivity()
+                    }
+
                     // 경험치 받아서..?
                     // 결과화면에 주입 혹은 결과화면으로 이동, 활동 id 주입
                 }) {

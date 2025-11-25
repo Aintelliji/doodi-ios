@@ -8,10 +8,11 @@ import Foundation
 
 struct ActivityDto : Codable, Equatable, Hashable {
 //    @DocumentID var userId: String?
-    var activityId: String?
+    var activityId: Int
     var activityIconUrl: String //Img url
     var activityName: String // 활동명
     var activityDescription: String // 활동 설명
+    var typeId: Int
     
     // 생성하는 경우 설정한 시간값으로 두개를 동일하게 채워서 보냄.
     // 진행중인 경우 조회할때는 db에서 가져온 값 세팅.

@@ -20,7 +20,12 @@ final class TimerViewModel{
     var timerViewStatus : TimerViewStatus = .TimerSetting
     var endActivityEventStatus: EndActivityEventStatus = .NotEnded
 
-    var activityDto: ActivityDto = ActivityDto(activityId: "0", activityIconUrl: "", activityName: "", activityDescription: "", totalTime: nil, remainingTime: nil)
+    //화면변경용
+    var activityDto: ActivityDto = ActivityDto(activityId: 0, activityIconUrl: "", activityName: "", activityDescription: "", typeId: 1, totalTime: nil, remainingTime: nil)
+    // 데이터 넘기는용..
+    var activityDto2: ActivityDto = ActivityDto(activityId: 0, activityIconUrl: "", activityName: "", activityDescription: "", typeId: 1, totalTime: nil, remainingTime: nil)
+    
+    @ObservationIgnored var resultDto = ResultDto(expEarned: 0, activity: ActivityDto(activityId: 0, activityIconUrl: "", activityName: "", activityDescription: "", typeId: 1, totalTime: nil, remainingTime: nil))
     
     // 상태 관리용 (화면은 딴데서 그리니까 구독 x)
     @ObservationIgnored var remainingTime: Double = 0
@@ -70,36 +75,59 @@ final class TimerViewModel{
         return activityDto
     }
     
-    func startActivity(selectedTime: Double){
+    func startActivity(selectedTime: Double) async {
         // 서버에 활동 시작한다고 보내면서
         // 설정한 시간.. 보내기?
-
-        let newActivityDto = ActivityDto(activityId: "0", activityIconUrl: activityDto.activityIconUrl, activityName: activityDto.activityName, activityDescription: activityDto.activityDescription, totalTime: selectedTime*60, remainingTime: selectedTime*60)
+        let newActivityDto = ActivityDto(activityId: 0, activityIconUrl: activityDto.activityIconUrl, activityName: activityDto.activityName, activityDescription: activityDto.activityDescription, typeId: activityDto.typeId, totalTime: selectedTime*60, remainingTime: selectedTime*60)
         // 초단위로 보냄.
         
         // 내부 dto 업데이트
         // 화면 변경용
         self.activityDto = newActivityDto
         
+        
         // isProgress = true 로 변경해야됨.
         timerViewStatus = .TimerProgress // 임시
         // 1. 서버에서 또 바로 조회하기?
-        activityRepository.postActivity(activityDto: newActivityDto)
+        let tmp = await activityRepository.postActivity(activityDto: newActivityDto)
+        
+        activityDto2.activityId =  tmp?.id ?? 0
+        activityDto2.activityName = tmp?.title ?? ""
+        activityDto2.activityIconUrl = ""
+        activityDto2.activityDescription = ""
+        activityDto2.typeId = tmp?.typeId ?? 0
+        activityDto2.totalTime = selectedTime
+        activityDto2.remainingTime = selectedTime
+        
         // getIsProgress()
         // 2. 내부 로컬에 가지고 있기..? --> 서버 호출 시점만 조절
     }
     
     // 활동 종료
-    func endActivity(){
+    func endActivity() async {
+        
+        print("활동 종료합니다...: \(self.remainingTime), \(self.activityDto2.activityId)")
+        activityDto2.remainingTime = remainingTime
         
         if self.remainingTime < 1 {
             // 활동 잘 종료..
 //          박수 페이지..?로 이동
-            endActivityEventStatus = .Finished
+            let result = await activityRepository.endActivity(activity: activityDto2, durationSec: Int(activityDto2.totalTime ?? 0), success: true)
+            if result != nil{
+                resultDto.expEarned = result?.expEarned ?? 0
+                resultDto.activity = activityDto2
+                endActivityEventStatus = .Finished
+            }
         }else{
             // 활동 미리 종료..
             // 그냥 종료 페이지로 이동..
-            endActivityEventStatus = .EarlyFinished
+            let result = await activityRepository.endActivity(activity: activityDto2, durationSec: Int(activityDto2.totalTime ?? remainingTime - remainingTime), success: false)
+            if result != nil {
+                resultDto.expEarned = result?.expEarned ?? 0
+                resultDto.activity = activityDto2
+                endActivityEventStatus = .EarlyFinished
+            }
+            
         }
         
         
