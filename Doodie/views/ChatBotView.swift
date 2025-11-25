@@ -39,7 +39,7 @@ struct ChatBotView: View {
                                 // true면 활동 말풍선
                                 if(msg.isActivity){
                                     Button{
-                                        path.append(ViewPath(type: .timerView(activity: ActivityDto(activityId: "0", activityIconUrl: "", activityName: "", activityDescription: "", totalTime: 0, remainingTime: 0))))
+                                        path.append(ViewPath(type: .timerView(activity: ActivityDto(activityId: 0, activityIconUrl: "", activityName: "", activityDescription: "", typeId: 1, totalTime: 0, remainingTime: 0))))
                                     } label: {
                                         ActivityBurbble(message: msg)
                                             .transition(.move(edge: msg.isMine ? .trailing : .leading).combined(with: .opacity))

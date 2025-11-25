@@ -18,6 +18,14 @@ final class APIClient {
                 .validate()
                 .responseDecodable(of: BaseResponse<T>.self) { response in
                     
+                    
+                    // 🔍 raw JSON 항상 찍기
+                            if let data = response.data,
+                               let json = String(data: data, encoding: .utf8) {
+                                print("📦 [RAW RESPONSE]:")
+                                print(json)
+                            }
+                    
                     switch response.result {
                         
                     // 200~209
@@ -37,6 +45,7 @@ final class APIClient {
                     // 에러 응답
                     case .failure(let error):
                         print("통신 url: \(convertible.urlRequest)")
+                        
                         continuation.resume(throwing: error)
                     }
                 }

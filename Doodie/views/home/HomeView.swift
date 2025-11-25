@@ -190,8 +190,8 @@ struct HomeView: View {
                     Text("임시")
                 case .timerView(let activityDto):
                     TimerView(path: $path, activity: activityDto)
-                case .resultView:
-                    ResultView(path: $path, activityDto: ActivityDto(activityId: "1", activityIconUrl: "💪", activityName: "운동하기", activityDescription: "몸을 움직여 건강해져요"), activityTime: 1, exp: 1, maxExp: 1, remainingExp: 1, recordText: "")
+                case .resultView(let resultDto):
+                    ResultView(path: $path, result: resultDto)
                     
                 }
             }

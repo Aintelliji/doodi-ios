@@ -73,10 +73,10 @@ struct TimerView: View {
         .onChange(of: timerViewModel.endActivityEventStatus) { newStatus in
             switch newStatus {
             case .Finished, .EarlyFinished:
-                path.append(ViewPath(type: .resultView))
+                path.append(ViewPath(type: .resultView(result: timerViewModel.resultDto)))
             print("End")
             case .NotEnded:
-                path.append(ViewPath(type: .resultView))
+                path.append(ViewPath(type: .resultView(result: timerViewModel.resultDto)))
                 print("Not Ended")
             }
         }

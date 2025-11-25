@@ -12,7 +12,7 @@ import Alamofire
 final class HomeViewModel : ObservableObject{
     
 //    var viewState : Any
-  
+    private let userRepository = UserRepository()
     // 얘가 바뀌면 뷰가 자동으로 업데이트 됨.
     @Published var activityStatusViewState : ActivityStatusViewState = .NewActivity
     
@@ -48,20 +48,20 @@ final class HomeViewModel : ObservableObject{
         // 서버에 요청
 //        activityProgressViewState.
         do{
-            let characterInfoResponse = try await APIClient.shared.request(HomeRouter.getCharacterInfo, type: CharacterInfoResponse.self)
+            let characterInfoResponse =  await userRepository.getCharactierInfo()
+//            let characterInfoResponse = try await APIClient.shared.request(HomeRouter.getCharacterInfo, type: CharacterInfoResponse.self)
 
             
-            DispatchQueue.main.async{
+            if(characterInfoResponse != nil){
                 //self.characterInfo?.characterImgUrl = ""
-                self.characterInfo?.level = characterInfoResponse.level // 1
-                self.characterInfo?.currentExp = characterInfoResponse.exp // 0
-                self.characterInfo?.minExpOfCurrentLevel = (characterInfoResponse.evolutionStageMinLevel-1)*100 // 0
+                self.characterInfo?.level = characterInfoResponse!.level // 1
+                self.characterInfo?.currentExp = characterInfoResponse!.exp // 0
+                self.characterInfo?.minExpOfCurrentLevel = (characterInfoResponse!.evolutionStageMinLevel-1)*100 // 0
                 self.characterInfo?.maxExpOfCurrentLevel = self.characterInfo!.minExpOfCurrentLevel+100
                 
-                print("디버그: \(characterInfoResponse.evolutionStageMinLevel)")
+                print("디버그: \(characterInfoResponse!.evolutionStageMinLevel)")
             }
 
-            
             
         }catch let apiError as APIError{
             

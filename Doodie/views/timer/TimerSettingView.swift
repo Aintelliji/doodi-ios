@@ -69,7 +69,10 @@ struct TimerSettingView: View {
 //            }
             Button(action: {
                 // 타이머 시작
-                timerViewModel.startActivity(selectedTime: selectedTime)
+                Task{
+                    await timerViewModel.startActivity(selectedTime: selectedTime)
+                }
+                
             }) {
                 HStack {
                     Text("🚀 시작하기")
